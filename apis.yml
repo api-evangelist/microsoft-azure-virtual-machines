@@ -1,0 +1,61 @@
+name: Azure Virtual Machines API
+description: Azure Virtual Machines (VMs) is one of several types of on-demand, scalable computing resources that Azure offers. VMs give you the flexibility of virtualization without having to buy and maintain physical hardware.
+image: https://azure.microsoft.com/svghandler/virtual-machines/
+tags:
+- Virtual Machines
+- Compute
+- Infrastructure
+- IaaS
+- Cloud Computing
+created: '2024-01-20'
+modified: '2024-01-20'
+url: https://azure.microsoft.com/en-us/services/virtual-machines/
+specificationVersion: '0.18'
+apis:
+- name: Azure Virtual Machines REST API
+  description: REST API for creating and managing Azure Virtual Machines
+  image: https://azure.microsoft.com/svghandler/virtual-machines/
+  humanURL: https://learn.microsoft.com/en-us/azure/virtual-machines/
+  baseURL: https://management.azure.com
+  tags:
+  - Virtual Machines
+  - Compute
+  - REST API
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/virtualMachines.json
+  - type: Swagger
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/virtualMachines.json
+  - type: Pricing
+    url: https://azure.microsoft.com/en-us/pricing/details/virtual-machines/
+  - type: SLA
+    url: https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/
+  - type: Getting Started
+    url: https://learn.microsoft.com/en-us/azure/virtual-machines/overview
+  - type: Tutorials
+    url: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-manage-vm
+  - type: SDKs
+    url: https://azure.microsoft.com/en-us/downloads/
+common:
+- type: Portal
+  url: https://portal.azure.com
+- type: Authentication
+  url: https://learn.microsoft.com/en-us/azure/active-directory/develop/authentication-scenarios
+- type: Status
+  url: https://status.azure.com/
+- type: Blog
+  url: https://azure.microsoft.com/en-us/blog/
+- type: Support
+  url: https://azure.microsoft.com/en-us/support/options/
+- type: Terms of Service
+  url: https://azure.microsoft.com/en-us/support/legal/
+- type: Privacy Policy
+  url: https://privacy.microsoft.com/en-us/privacystatement
+- type: Contact
+  url: https://azure.microsoft.com/en-us/contact/
+maintainers:
+- FN: Microsoft Azure
+  email: azuresupport@microsoft.com
+  url: https://azure.microsoft.com
