@@ -1,4 +1,4 @@
-name: Azure Virtual Machines API
+name: Azure Virtual Machines
 description: Azure Virtual Machines (VMs) is one of several types of on-demand, scalable computing resources that Azure offers. VMs give you the flexibility of virtualization without having to buy and maintain physical hardware.
 image: https://azure.microsoft.com/svghandler/virtual-machines/
 tags:
