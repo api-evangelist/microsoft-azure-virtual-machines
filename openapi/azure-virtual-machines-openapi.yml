@@ -39,7 +39,7 @@ paths:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines:
     get:
       operationId: VirtualMachines_List
-      summary: List virtual machines in a resource group
+      summary: Azure Virtual Machines List virtual machines in a resource group
       description: >-
         Lists all of the virtual machines in the specified resource group. Use
         the nextLink property in the response to get the next page of virtual
@@ -86,7 +86,7 @@ paths:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines:
     get:
       operationId: VirtualMachines_ListAll
-      summary: List all virtual machines in a subscription
+      summary: Azure Virtual Machines List all virtual machines in a subscription
       description: >-
         Lists all of the virtual machines in the specified subscription. Use
         the nextLink property in the response to get the next page of virtual
@@ -134,7 +134,7 @@ paths:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines:
     get:
       operationId: VirtualMachines_ListByLocation
-      summary: List virtual machines by location
+      summary: Azure Virtual Machines List virtual machines by location
       description: >-
         Gets all the virtual machines under the specified subscription for
         the specified location.
@@ -161,7 +161,7 @@ paths:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}:
     put:
       operationId: VirtualMachines_CreateOrUpdate
-      summary: Create or update a virtual machine
+      summary: Azure Virtual Machines Create or update a virtual machine
       description: >-
         The operation to create or update a virtual machine. Please note some
         properties can be set only during virtual machine creation.
@@ -200,7 +200,7 @@ paths:
                 $ref: '#/components/schemas/CloudError'
     get:
       operationId: VirtualMachines_Get
-      summary: Get a virtual machine
+      summary: Azure Virtual Machines Get a virtual machine
       description: >-
         Retrieves information about the model view or the instance view of a
         virtual machine.
@@ -237,7 +237,7 @@ paths:
                 $ref: '#/components/schemas/CloudError'
     patch:
       operationId: VirtualMachines_Update
-      summary: Update a virtual machine
+      summary: Azure Virtual Machines Update a virtual machine
       description: >-
         The operation to update a virtual machine.
       tags:
@@ -269,7 +269,7 @@ paths:
                 $ref: '#/components/schemas/CloudError'
     delete:
       operationId: VirtualMachines_Delete
-      summary: Delete a virtual machine
+      summary: Azure Virtual Machines Delete a virtual machine
       description: >-
         The operation to delete a virtual machine.
       tags:
@@ -299,10 +299,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView:
-    get:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView
+  : get:
       operationId: VirtualMachines_InstanceView
-      summary: Get the instance view of a virtual machine
+      summary: Azure Virtual Machines Get the instance view of a virtual machine
       description: >-
         Retrieves information about the run-time state of a virtual machine.
       tags:
@@ -326,10 +326,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start
+  : post:
       operationId: VirtualMachines_Start
-      summary: Start a virtual machine
+      summary: Azure Virtual Machines Start a virtual machine
       description: >-
         The operation to start a virtual machine.
       tags:
@@ -351,10 +351,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff
+  : post:
       operationId: VirtualMachines_PowerOff
-      summary: Power off a virtual machine
+      summary: Azure Virtual Machines Power off a virtual machine
       description: >-
         The operation to power off (stop) a virtual machine. The virtual machine
         can be restarted with the same provisioned resources. You are still
@@ -387,10 +387,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate
+  : post:
       operationId: VirtualMachines_Deallocate
-      summary: Deallocate a virtual machine
+      summary: Azure Virtual Machines Deallocate a virtual machine
       description: >-
         Shuts down the virtual machine and releases the compute resources. You
         are not billed for the compute resources that this virtual machine uses.
@@ -419,10 +419,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart
+  : post:
       operationId: VirtualMachines_Restart
-      summary: Restart a virtual machine
+      summary: Azure Virtual Machines Restart a virtual machine
       description: >-
         The operation to restart a virtual machine.
       tags:
@@ -444,10 +444,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy
+  : post:
       operationId: VirtualMachines_Redeploy
-      summary: Redeploy a virtual machine
+      summary: Azure Virtual Machines Redeploy a virtual machine
       description: >-
         Shuts down the virtual machine, moves it to a new node, and powers
         it back on.
@@ -470,10 +470,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage
+  : post:
       operationId: VirtualMachines_Reimage
-      summary: Reimage a virtual machine
+      summary: Azure Virtual Machines Reimage a virtual machine
       description: >-
         Reimages (upgrades the operating system) a virtual machine which does
         not have an ephemeral OS disk. For virtual machines that have an
@@ -497,10 +497,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture
+  : post:
       operationId: VirtualMachines_Capture
-      summary: Capture a virtual machine
+      summary: Azure Virtual Machines Capture a virtual machine
       description: >-
         Captures the VM by copying virtual hard disks of the VM and outputs a
         template that can be used to create similar VMs.
@@ -534,10 +534,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize
+  : post:
       operationId: VirtualMachines_Generalize
-      summary: Generalize a virtual machine
+      summary: Azure Virtual Machines Generalize a virtual machine
       description: >-
         Sets the OS state of the virtual machine to generalized. It is
         recommended to sysprep the virtual machine before performing this
@@ -559,10 +559,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks
+  : post:
       operationId: VirtualMachines_ConvertToManagedDisks
-      summary: Convert to managed disks
+      summary: Azure Virtual Machines Convert to managed disks
       description: >-
         Converts virtual machine disks from blob-based to managed disks.
         Virtual machine must be stop-deallocated before invoking this operation.
@@ -585,10 +585,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance
+  : post:
       operationId: VirtualMachines_PerformMaintenance
-      summary: Perform maintenance on a virtual machine
+      summary: Azure Virtual Machines Perform maintenance on a virtual machine
       description: >-
         The operation to perform maintenance on a virtual machine.
       tags:
@@ -610,10 +610,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction
+  : post:
       operationId: VirtualMachines_SimulateEviction
-      summary: Simulate eviction of a spot virtual machine
+      summary: Azure Virtual Machines Simulate eviction of a spot virtual machine
       description: >-
         The operation to simulate the eviction of a spot virtual machine.
       tags:
@@ -633,10 +633,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply
+  : post:
       operationId: VirtualMachines_Reapply
-      summary: Reapply a virtual machine state
+      summary: Azure Virtual Machines Reapply a virtual machine state
       description: >-
         The operation to reapply a virtual machine's state.
       tags:
@@ -658,10 +658,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData
+  : post:
       operationId: VirtualMachines_RetrieveBootDiagnosticsData
-      summary: Retrieve boot diagnostics data
+      summary: Azure Virtual Machines Retrieve boot diagnostics data
       description: >-
         The operation to retrieve SAS URIs for a virtual machine's boot
         diagnostic logs.
@@ -694,10 +694,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches
+  : post:
       operationId: VirtualMachines_AssessPatches
-      summary: Assess patches on a virtual machine
+      summary: Azure Virtual Machines Assess patches on a virtual machine
       description: >-
         Assess patches on the VM.
       tags:
@@ -723,10 +723,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches
+  : post:
       operationId: VirtualMachines_InstallPatches
-      summary: Install patches on a virtual machine
+      summary: Azure Virtual Machines Install patches on a virtual machine
       description: >-
         Installs patches on the VM.
       tags:
@@ -759,10 +759,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks
+  : post:
       operationId: VirtualMachines_AttachDetachDataDisks
-      summary: Attach or detach data disks
+      summary: Azure Virtual Machines Attach or detach data disks
       description: >-
         Attach and detach data disks to/from the virtual machine.
       tags:
@@ -795,10 +795,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes:
-    get:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes
+  : get:
       operationId: VirtualMachines_ListAvailableSizes
-      summary: List available sizes for a virtual machine
+      summary: Azure Virtual Machines List available sizes for a virtual machine
       description: >-
         Lists all available virtual machine sizes to which the specified
         virtual machine can be resized.
@@ -823,10 +823,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
 
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand:
-    post:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand
+  : post:
       operationId: VirtualMachines_RunCommand
-      summary: Run command on a virtual machine
+      summary: Azure Virtual Machines Run command on a virtual machine
       description: >-
         Run command on the VM.
       tags:
