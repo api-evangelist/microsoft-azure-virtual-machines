@@ -1,0 +1,947 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Virtual Machines REST API
+  description: REST API for creating and managing Azure Virtual Machines. Provides operations for provisioning, starting,
+    stopping, deallocating, restarting, reimaging, capturing, and deleting virtual machines, as well as managing data disks,
+    extensions, patching, and run commands. All operations follow the Azure Resource Manager pattern and require OAuth 2.0
+    authentication via Microsoft Entra ID.
+  tags:
+  - Microsoft
+  - Azure
+  - Virtual
+  - Machines
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-azure-virtual-machines
+    baseUri: https://management.azure.com
+    description: Azure Virtual Machines REST API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{MICROSOFT_AZURE_VIRTUAL_MACHINES_TOKEN}}'
+    resources:
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines
+      operations:
+      - name: virtualmachines-list
+        method: GET
+        description: Azure Virtual Machines List virtual machines in a resource group
+        inputParameters:
+        - name: $filter
+          in: query
+          type: string
+          description: The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id'
+            eq /subscriptions/{subId}/resourceGroups/{rgName}/p
+        - name: $expand
+          in: query
+          type: string
+          description: The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime
+            properties of the virtual machine that is managed by the pla
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-providers-microsoft
+      path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+      operations:
+      - name: virtualmachines-listall
+        method: GET
+        description: Azure Virtual Machines List all virtual machines in a subscription
+        inputParameters:
+        - name: statusOnly
+          in: query
+          type: string
+          description: statusOnly=true enables fetching run time status of all Virtual Machines in the subscription.
+        - name: $filter
+          in: query
+          type: string
+          description: The system query option to filter VMs returned in the response.
+        - name: $expand
+          in: query
+          type: string
+          description: The expand expression to apply on the operation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-providers-microsoft
+      path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+      operations:
+      - name: virtualmachines-listbylocation
+        method: GET
+        description: Azure Virtual Machines List virtual machines by location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+      operations:
+      - name: virtualmachines-createorupdate
+        method: PUT
+        description: Azure Virtual Machines Create or update a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: virtualmachines-get
+        method: GET
+        description: Azure Virtual Machines Get a virtual machine
+        inputParameters:
+        - name: $expand
+          in: query
+          type: string
+          description: The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime
+            properties of the virtual machine.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: virtualmachines-update
+        method: PATCH
+        description: Azure Virtual Machines Update a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: virtualmachines-delete
+        method: DELETE
+        description: Azure Virtual Machines Delete a virtual machine
+        inputParameters:
+        - name: forceDeletion
+          in: query
+          type: boolean
+          description: Optional parameter to force delete virtual machines.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView
+      operations:
+      - name: virtualmachines-instanceview
+        method: GET
+        description: Azure Virtual Machines Get the instance view of a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start
+      operations:
+      - name: virtualmachines-start
+        method: POST
+        description: Azure Virtual Machines Start a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff
+      operations:
+      - name: virtualmachines-poweroff
+        method: POST
+        description: Azure Virtual Machines Power off a virtual machine
+        inputParameters:
+        - name: skipShutdown
+          in: query
+          type: boolean
+          description: The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful
+            shutdown whereas false indicates otherwise.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate
+      operations:
+      - name: virtualmachines-deallocate
+        method: POST
+        description: Azure Virtual Machines Deallocate a virtual machine
+        inputParameters:
+        - name: hibernate
+          in: query
+          type: boolean
+          description: Optional parameter to hibernate a virtual machine.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart
+      operations:
+      - name: virtualmachines-restart
+        method: POST
+        description: Azure Virtual Machines Restart a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy
+      operations:
+      - name: virtualmachines-redeploy
+        method: POST
+        description: Azure Virtual Machines Redeploy a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage
+      operations:
+      - name: virtualmachines-reimage
+        method: POST
+        description: Azure Virtual Machines Reimage a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture
+      operations:
+      - name: virtualmachines-capture
+        method: POST
+        description: Azure Virtual Machines Capture a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize
+      operations:
+      - name: virtualmachines-generalize
+        method: POST
+        description: Azure Virtual Machines Generalize a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks
+      operations:
+      - name: virtualmachines-converttomanageddisks
+        method: POST
+        description: Azure Virtual Machines Convert to managed disks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance
+      operations:
+      - name: virtualmachines-performmaintenance
+        method: POST
+        description: Azure Virtual Machines Perform maintenance on a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction
+      operations:
+      - name: virtualmachines-simulateeviction
+        method: POST
+        description: Azure Virtual Machines Simulate eviction of a spot virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply
+      operations:
+      - name: virtualmachines-reapply
+        method: POST
+        description: Azure Virtual Machines Reapply a virtual machine state
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData
+      operations:
+      - name: virtualmachines-retrievebootdiagnosticsdata
+        method: POST
+        description: Azure Virtual Machines Retrieve boot diagnostics data
+        inputParameters:
+        - name: sasUriExpirationTimeInMinutes
+          in: query
+          type: integer
+          description: Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches
+      operations:
+      - name: virtualmachines-assesspatches
+        method: POST
+        description: Azure Virtual Machines Assess patches on a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches
+      operations:
+      - name: virtualmachines-installpatches
+        method: POST
+        description: Azure Virtual Machines Install patches on a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks
+      operations:
+      - name: virtualmachines-attachdetachdatadisks
+        method: POST
+        description: Azure Virtual Machines Attach or detach data disks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes
+      operations:
+      - name: virtualmachines-listavailablesizes
+        method: GET
+        description: Azure Virtual Machines List available sizes for a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionid-resourcegroups-reso
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand
+      operations:
+      - name: virtualmachines-runcommand
+        method: POST
+        description: Azure Virtual Machines Run command on a virtual machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: microsoft-azure-virtual-machines-rest
+    description: REST adapter for Azure Virtual Machines REST API.
+    resources:
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines
+      name: virtualmachines-list
+      operations:
+      - method: GET
+        name: virtualmachines-list
+        description: Azure Virtual Machines List virtual machines in a resource group
+        call: microsoft-azure-virtual-machines.virtualmachines-list
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+      name: virtualmachines-listall
+      operations:
+      - method: GET
+        name: virtualmachines-listall
+        description: Azure Virtual Machines List all virtual machines in a subscription
+        call: microsoft-azure-virtual-machines.virtualmachines-listall
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+      name: virtualmachines-listbylocation
+      operations:
+      - method: GET
+        name: virtualmachines-listbylocation
+        description: Azure Virtual Machines List virtual machines by location
+        call: microsoft-azure-virtual-machines.virtualmachines-listbylocation
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+      name: virtualmachines-createorupdate
+      operations:
+      - method: PUT
+        name: virtualmachines-createorupdate
+        description: Azure Virtual Machines Create or update a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-createorupdate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+      name: virtualmachines-get
+      operations:
+      - method: GET
+        name: virtualmachines-get
+        description: Azure Virtual Machines Get a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+      name: virtualmachines-update
+      operations:
+      - method: PATCH
+        name: virtualmachines-update
+        description: Azure Virtual Machines Update a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-update
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+      name: virtualmachines-delete
+      operations:
+      - method: DELETE
+        name: virtualmachines-delete
+        description: Azure Virtual Machines Delete a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-delete
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView
+      name: virtualmachines-instanceview
+      operations:
+      - method: GET
+        name: virtualmachines-instanceview
+        description: Azure Virtual Machines Get the instance view of a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-instanceview
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start
+      name: virtualmachines-start
+      operations:
+      - method: POST
+        name: virtualmachines-start
+        description: Azure Virtual Machines Start a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-start
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff
+      name: virtualmachines-poweroff
+      operations:
+      - method: POST
+        name: virtualmachines-poweroff
+        description: Azure Virtual Machines Power off a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-poweroff
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate
+      name: virtualmachines-deallocate
+      operations:
+      - method: POST
+        name: virtualmachines-deallocate
+        description: Azure Virtual Machines Deallocate a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-deallocate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart
+      name: virtualmachines-restart
+      operations:
+      - method: POST
+        name: virtualmachines-restart
+        description: Azure Virtual Machines Restart a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-restart
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy
+      name: virtualmachines-redeploy
+      operations:
+      - method: POST
+        name: virtualmachines-redeploy
+        description: Azure Virtual Machines Redeploy a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-redeploy
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage
+      name: virtualmachines-reimage
+      operations:
+      - method: POST
+        name: virtualmachines-reimage
+        description: Azure Virtual Machines Reimage a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-reimage
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture
+      name: virtualmachines-capture
+      operations:
+      - method: POST
+        name: virtualmachines-capture
+        description: Azure Virtual Machines Capture a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-capture
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize
+      name: virtualmachines-generalize
+      operations:
+      - method: POST
+        name: virtualmachines-generalize
+        description: Azure Virtual Machines Generalize a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-generalize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks
+      name: virtualmachines-converttomanageddisks
+      operations:
+      - method: POST
+        name: virtualmachines-converttomanageddisks
+        description: Azure Virtual Machines Convert to managed disks
+        call: microsoft-azure-virtual-machines.virtualmachines-converttomanageddisks
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance
+      name: virtualmachines-performmaintenance
+      operations:
+      - method: POST
+        name: virtualmachines-performmaintenance
+        description: Azure Virtual Machines Perform maintenance on a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-performmaintenance
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction
+      name: virtualmachines-simulateeviction
+      operations:
+      - method: POST
+        name: virtualmachines-simulateeviction
+        description: Azure Virtual Machines Simulate eviction of a spot virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-simulateeviction
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply
+      name: virtualmachines-reapply
+      operations:
+      - method: POST
+        name: virtualmachines-reapply
+        description: Azure Virtual Machines Reapply a virtual machine state
+        call: microsoft-azure-virtual-machines.virtualmachines-reapply
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData
+      name: virtualmachines-retrievebootdiagnosticsdata
+      operations:
+      - method: POST
+        name: virtualmachines-retrievebootdiagnosticsdata
+        description: Azure Virtual Machines Retrieve boot diagnostics data
+        call: microsoft-azure-virtual-machines.virtualmachines-retrievebootdiagnosticsdata
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches
+      name: virtualmachines-assesspatches
+      operations:
+      - method: POST
+        name: virtualmachines-assesspatches
+        description: Azure Virtual Machines Assess patches on a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-assesspatches
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches
+      name: virtualmachines-installpatches
+      operations:
+      - method: POST
+        name: virtualmachines-installpatches
+        description: Azure Virtual Machines Install patches on a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-installpatches
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks
+      name: virtualmachines-attachdetachdatadisks
+      operations:
+      - method: POST
+        name: virtualmachines-attachdetachdatadisks
+        description: Azure Virtual Machines Attach or detach data disks
+        call: microsoft-azure-virtual-machines.virtualmachines-attachdetachdatadisks
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes
+      name: virtualmachines-listavailablesizes
+      operations:
+      - method: GET
+        name: virtualmachines-listavailablesizes
+        description: Azure Virtual Machines List available sizes for a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-listavailablesizes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand
+      name: virtualmachines-runcommand
+      operations:
+      - method: POST
+        name: virtualmachines-runcommand
+        description: Azure Virtual Machines Run command on a virtual machine
+        call: microsoft-azure-virtual-machines.virtualmachines-runcommand
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: microsoft-azure-virtual-machines-mcp
+    transport: http
+    description: MCP adapter for Azure Virtual Machines REST API for AI agent use.
+    tools:
+    - name: virtualmachines-list
+      description: Azure Virtual Machines List virtual machines in a resource group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-list
+      with:
+        $filter: tools.$filter
+        $expand: tools.$expand
+      inputParameters:
+      - name: $filter
+        type: string
+        description: The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id'
+          eq /subscriptions/{subId}/resourceGroups/{rgName}/p
+      - name: $expand
+        type: string
+        description: The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties
+          of the virtual machine that is managed by the pla
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-listall
+      description: Azure Virtual Machines List all virtual machines in a subscription
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-listall
+      with:
+        statusOnly: tools.statusOnly
+        $filter: tools.$filter
+        $expand: tools.$expand
+      inputParameters:
+      - name: statusOnly
+        type: string
+        description: statusOnly=true enables fetching run time status of all Virtual Machines in the subscription.
+      - name: $filter
+        type: string
+        description: The system query option to filter VMs returned in the response.
+      - name: $expand
+        type: string
+        description: The expand expression to apply on the operation.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-listbylocation
+      description: Azure Virtual Machines List virtual machines by location
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-listbylocation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-createorupdate
+      description: Azure Virtual Machines Create or update a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-createorupdate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-get
+      description: Azure Virtual Machines Get a virtual machine
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-get
+      with:
+        $expand: tools.$expand
+      inputParameters:
+      - name: $expand
+        type: string
+        description: The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties
+          of the virtual machine.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-update
+      description: Azure Virtual Machines Update a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-update
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-delete
+      description: Azure Virtual Machines Delete a virtual machine
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-delete
+      with:
+        forceDeletion: tools.forceDeletion
+      inputParameters:
+      - name: forceDeletion
+        type: boolean
+        description: Optional parameter to force delete virtual machines.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-instanceview
+      description: Azure Virtual Machines Get the instance view of a virtual machine
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-instanceview
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-start
+      description: Azure Virtual Machines Start a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-start
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-poweroff
+      description: Azure Virtual Machines Power off a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-poweroff
+      with:
+        skipShutdown: tools.skipShutdown
+      inputParameters:
+      - name: skipShutdown
+        type: boolean
+        description: The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown
+          whereas false indicates otherwise.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-deallocate
+      description: Azure Virtual Machines Deallocate a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-deallocate
+      with:
+        hibernate: tools.hibernate
+      inputParameters:
+      - name: hibernate
+        type: boolean
+        description: Optional parameter to hibernate a virtual machine.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-restart
+      description: Azure Virtual Machines Restart a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-restart
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-redeploy
+      description: Azure Virtual Machines Redeploy a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-redeploy
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-reimage
+      description: Azure Virtual Machines Reimage a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-reimage
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-capture
+      description: Azure Virtual Machines Capture a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-capture
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-generalize
+      description: Azure Virtual Machines Generalize a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-generalize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-converttomanageddisks
+      description: Azure Virtual Machines Convert to managed disks
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-converttomanageddisks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-performmaintenance
+      description: Azure Virtual Machines Perform maintenance on a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-performmaintenance
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-simulateeviction
+      description: Azure Virtual Machines Simulate eviction of a spot virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-simulateeviction
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-reapply
+      description: Azure Virtual Machines Reapply a virtual machine state
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-reapply
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-retrievebootdiagnosticsdata
+      description: Azure Virtual Machines Retrieve boot diagnostics data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-retrievebootdiagnosticsdata
+      with:
+        sasUriExpirationTimeInMinutes: tools.sasUriExpirationTimeInMinutes
+      inputParameters:
+      - name: sasUriExpirationTimeInMinutes
+        type: integer
+        description: Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-assesspatches
+      description: Azure Virtual Machines Assess patches on a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-assesspatches
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-installpatches
+      description: Azure Virtual Machines Install patches on a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-installpatches
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-attachdetachdatadisks
+      description: Azure Virtual Machines Attach or detach data disks
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-attachdetachdatadisks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-listavailablesizes
+      description: Azure Virtual Machines List available sizes for a virtual machine
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-virtual-machines.virtualmachines-listavailablesizes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: virtualmachines-runcommand
+      description: Azure Virtual Machines Run command on a virtual machine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-virtual-machines.virtualmachines-runcommand
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_VIRTUAL_MACHINES_TOKEN: MICROSOFT_AZURE_VIRTUAL_MACHINES_TOKEN
