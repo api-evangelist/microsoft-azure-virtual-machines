@@ -4,7 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Azure Virtual Machines
 providerId: microsoft-azure-virtual-machines
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - Cloud Computing
   - Compute
@@ -13,122 +14,146 @@ tags:
   - Virtual Machines
   - Rate Limiting
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Azure Virtual Machines API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+description: Azure Virtual Machines API throttling is implemented by the Microsoft.Compute
+  resource provider on top of Azure Resource Manager (ARM). Compute uses a token-bucket
+  algorithm with two layers — per-resource and per-subscription — applied per region, with
+  a 1-minute window. Each VM API category (Put, Update, Delete, Low-Cost-Get, High-Cost-Get,
+  Get-Operation, Guest-Patch) has its own bucket sizes and refill rates. Throttled requests
+  return HTTP 429 with the x-ms-ratelimit-remaining-resource header showing remaining tokens.
+sources:
+  - https://learn.microsoft.com/en-us/azure/virtual-machines/compute-throttling-limits
+  - https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling
+  - https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/troubleshooting-throttling-errors
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
   retryAfter: Retry-After
-  policy: RateLimit-Policy
+  remainingResource: x-ms-ratelimit-remaining-resource
+  remainingSubscriptionReads: x-ms-ratelimit-remaining-subscription-reads
+  remainingSubscriptionWrites: x-ms-ratelimit-remaining-subscription-writes
+  remainingSubscriptionDeletes: x-ms-ratelimit-remaining-subscription-deletes
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Put VM (create) — resource bucket
+    scope: resource
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 4
     timeFrame: minute
-    applies:
-      - Azure Virtual Machines REST API
-      - Azure Virtual Machine Scale Sets REST API
-      - Azure Virtual Machine Extensions REST API
-      - Azure Virtual Machine Images REST API
-      - Azure Virtual Machine Sizes REST API
-      - Azure Virtual Machine Run Commands REST API
-      - Azure Availability Sets REST API
-      - Azure Proximity Placement Groups REST API
-      - Azure Dedicated Hosts REST API
-      - Azure Capacity Reservations REST API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Azure Virtual Machines REST API
-      - Azure Virtual Machine Scale Sets REST API
-      - Azure Virtual Machine Extensions REST API
-      - Azure Virtual Machine Images REST API
-      - Azure Virtual Machine Sizes REST API
-      - Azure Virtual Machine Run Commands REST API
-      - Azure Availability Sets REST API
-      - Azure Proximity Placement Groups REST API
-      - Azure Dedicated Hosts REST API
-      - Azure Capacity Reservations REST API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+    notes: Refill 4/min, max bucket 12.
+  - name: Put VM (create) — subscription bucket
+    scope: subscription/region
     metric: requests_per_minute
-    limit: 100
-    burst: 200
+    limit: 500
     timeFrame: minute
-    applies:
-      - Azure Virtual Machines REST API
-      - Azure Virtual Machine Scale Sets REST API
-      - Azure Virtual Machine Extensions REST API
-      - Azure Virtual Machine Images REST API
-      - Azure Virtual Machine Sizes REST API
-      - Azure Virtual Machine Run Commands REST API
-      - Azure Availability Sets REST API
-      - Azure Proximity Placement Groups REST API
-      - Azure Dedicated Hosts REST API
-      - Azure Capacity Reservations REST API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Azure Virtual Machines REST API
-      - Azure Virtual Machine Scale Sets REST API
-      - Azure Virtual Machine Extensions REST API
-      - Azure Virtual Machine Images REST API
-      - Azure Virtual Machine Sizes REST API
-      - Azure Virtual Machine Run Commands REST API
-      - Azure Availability Sets REST API
-      - Azure Proximity Placement Groups REST API
-      - Azure Dedicated Hosts REST API
-      - Azure Capacity Reservations REST API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    notes: Refill 500/min, max bucket 1500.
+  - name: Update VM — resource bucket
+    scope: resource
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
+    limit: 4
     timeFrame: minute
-    applies:
-      - Azure Virtual Machines REST API
-      - Azure Virtual Machine Scale Sets REST API
-      - Azure Virtual Machine Extensions REST API
-      - Azure Virtual Machine Images REST API
-      - Azure Virtual Machine Sizes REST API
-      - Azure Virtual Machine Run Commands REST API
-      - Azure Availability Sets REST API
-      - Azure Proximity Placement Groups REST API
-      - Azure Dedicated Hosts REST API
-      - Azure Capacity Reservations REST API
+    notes: Refill 4/min, max bucket 12. Covers Update, Restart, Power Off, Start, Reapply,
+      Capture, Run Command, Extension Create/Update/Delete, etc.
+  - name: Update VM — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 500
+    timeFrame: minute
+    notes: Refill 500/min, max bucket 1500.
+  - name: Delete VM — resource bucket
+    scope: resource
+    metric: requests_per_minute
+    limit: 4
+    timeFrame: minute
+    notes: Refill 4/min, max bucket 12. Covers Delete, Simulate Eviction, Deallocate.
+  - name: Delete VM — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 500
+    timeFrame: minute
+    notes: Refill 500/min, max bucket 1500.
+  - name: Low-Cost Get VM — resource bucket
+    scope: resource
+    metric: requests_per_minute
+    limit: 12
+    timeFrame: minute
+    notes: Refill 12/min, max bucket 36. Covers single-VM Get, Instance View, Extensions Get,
+      List Available Sizes, Boot Diagnostics, Run Command Get/List.
+  - name: Low-Cost Get VM — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 8000
+    timeFrame: minute
+    notes: Refill 8000/min, max bucket 24000.
+  - name: High-Cost Get VM — subscription only
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 300
+    timeFrame: minute
+    notes: Refill 300/min, max bucket 900. Covers List, List All, List By Location.
+  - name: Get Async Operation — resource bucket
+    scope: resource
+    metric: requests_per_minute
+    limit: 15
+    timeFrame: minute
+    notes: Refill 15/min, max bucket 45. For polling status of async VM ops.
+  - name: Get Async Operation — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 5000
+    timeFrame: minute
+    notes: Refill 5000/min, max bucket 15000.
+  - name: VM Guest Patch — resource bucket
+    scope: resource
+    metric: requests_per_minute
+    limit: 2
+    timeFrame: minute
+    notes: Refill 2/min, max bucket 6. Covers Assess Patches and Install Patches.
+  - name: VM Guest Patch — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 200
+    timeFrame: minute
+    notes: Refill 200/min, max bucket 600.
+  - name: VM Scale Set Put — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 125
+    timeFrame: minute
+    notes: Refill 125/min, max bucket 375.
+  - name: VM Scale Set Update — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 500
+    timeFrame: minute
+    notes: Refill 500/min, max bucket 1500.
+  - name: VM Scale Set Delete — subscription bucket
+    scope: subscription/region
+    metric: requests_per_minute
+    limit: 175
+    timeFrame: minute
+    notes: Refill 175/min, max bucket 525.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Token bucket algorithm
+    description: Each policy category has a refill rate and max bucket capacity. Tokens are
+      consumed per request; depletion triggers throttling. The bucket refills at the documented
+      rate every minute.
+  - name: Resource and subscription stacking
+    description: Both buckets must have tokens for a request to succeed. Resource limits prevent
+      a single VM from exhausting subscription quota; subscription limits prevent a single
+      subscription from impacting other tenants in the region.
+  - name: Honor x-ms-ratelimit-remaining-resource
+    description: This header is returned with every Compute response and shows remaining tokens
+      across applicable policies. Use it to back off proactively before getting 429.
+  - name: Exponential backoff with Retry-After
+    description: SDKs auto-retry 429s with exponential backoff. Custom clients should honor
+      Retry-After and add jitter.
+  - name: Use batch / list operations
+    description: Prefer single List call over per-VM Get loop. Use Get Async Operation polling
+      sparingly — long-poll fewer ops.
+  - name: ARM token-bucket layering
+    description: In addition to Compute-specific limits, ARM-level subscription buckets (250
+      reads/25 per sec; 200 writes/10 per sec) also apply.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://azure.microsoft.com/services/virtual-machines/
