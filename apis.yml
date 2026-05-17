@@ -32,7 +32,7 @@ apis:
         url: https://azure.microsoft.com/en-us/pricing/details/virtual-machines/
       - type: SLA
         url: https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/overview
       - type: Tutorials
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-manage-vm
@@ -44,7 +44,7 @@ apis:
         url: https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-managed-identities-work-vm
       - type: Quickstart
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli
-      - type: Rate Limits
+      - type: RateLimits
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/quotas
       - type: SDK - Python
         url: https://learn.microsoft.com/en-us/python/api/overview/azure/compute
@@ -68,7 +68,7 @@ apis:
         url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-scale-sets
       - type: Reference
         url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-scale-sets?view=rest-compute-2025-04-01
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/quick-create-portal
       - type: Pricing
         url: https://azure.microsoft.com/en-us/pricing/details/virtual-machine-scale-sets/
@@ -88,7 +88,7 @@ apis:
         url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-extensions
       - type: Reference
         url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-extensions?view=rest-compute-2025-04-01
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview
   - name: Azure Virtual Machine Images REST API
     description: REST API for listing and querying available virtual machine images in Azure, including platform images, marketplace images, and custom images. Provides operations for listing publishers, offers, SKUs, and image versions by region.
@@ -193,27 +193,27 @@ common:
     url: https://portal.azure.com
   - type: Authentication
     url: https://learn.microsoft.com/en-us/azure/active-directory/develop/authentication-scenarios
-  - type: Status
+  - type: StatusPage
     url: https://status.azure.com/
   - type: Blog
     url: https://azure.microsoft.com/en-us/blog/
   - type: Support
     url: https://azure.microsoft.com/en-us/support/options/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://azure.microsoft.com/en-us/support/legal/
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Contact
     url: https://azure.microsoft.com/en-us/contact/
   - type: Documentation
     url: https://learn.microsoft.com/en-us/azure/virtual-machines/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://learn.microsoft.com/en-us/azure/virtual-machines/overview
   - type: Pricing
     url: https://azure.microsoft.com/en-us/pricing/details/virtual-machines/
   - type: Website
     url: https://azure.microsoft.com/en-us/products/virtual-machines
-  - type: Sign Up
+  - type: SignUp
     url: https://azure.microsoft.com/en-us/free
   - type: Login
     url: https://portal.azure.com
@@ -221,15 +221,15 @@ common:
     url: https://azure.microsoft.com/en-us/downloads/
   - type: CLI Tools
     url: https://learn.microsoft.com/en-us/cli/azure/vm
-  - type: Rate Limits
+  - type: RateLimits
     url: https://learn.microsoft.com/en-us/azure/virtual-machines/quotas
-  - type: Change Log
+  - type: ChangeLog
     url: https://azure.microsoft.com/en-us/updates/?product=virtual-machines
   - type: Community
     url: https://learn.microsoft.com/en-us/answers/tags/94/azure-virtual-machines
-  - type: Stack Overflow
+  - type: StackOverflow
     url: https://stackoverflow.com/questions/tagged/azure-virtual-machines
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/Azure
   - type: GitHub REST API Specs
     url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager
