@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DiagnosticsProfile",
+  "title": "DiagnosticsProfile",
+  "type": "object",
+  "description": "Specifies the boot diagnostic settings state.",
+  "properties": {
+    "bootDiagnostics": {
+      "type": "object",
+      "description": "Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether boot diagnostics should be enabled on the Virtual Machine."
+        },
+        "storageUri": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the storage account to use for placing the console output and screenshot."
+        }
+      }
+    }
+  }
+}

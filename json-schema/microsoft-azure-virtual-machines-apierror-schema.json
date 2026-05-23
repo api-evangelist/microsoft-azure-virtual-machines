@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiError",
+  "title": "ApiError",
+  "type": "object",
+  "description": "Api error.",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "The error code."
+    },
+    "message": {
+      "type": "string",
+      "description": "The error message."
+    },
+    "target": {
+      "type": "string",
+      "description": "The target of the particular error."
+    },
+    "details": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiErrorBase"
+      },
+      "description": "The Api error details."
+    },
+    "innererror": {
+      "type": "object",
+      "description": "The Api inner error.",
+      "properties": {
+        "exceptiontype": {
+          "type": "string",
+          "description": "The exception type."
+        },
+        "errordetail": {
+          "type": "string",
+          "description": "The internal error message or exception dump."
+        }
+      }
+    }
+  }
+}

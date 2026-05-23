@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RunCommandInput",
+  "title": "RunCommandInput",
+  "type": "object",
+  "description": "Capture virtual machine parameters.",
+  "required": [
+    "commandId"
+  ],
+  "properties": {
+    "commandId": {
+      "type": "string",
+      "description": "The run command id."
+    },
+    "script": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional. The script to be executed."
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The run command parameter name."
+          },
+          "value": {
+            "type": "string",
+            "description": "The run command parameter value."
+          }
+        }
+      },
+      "description": "The run command parameters."
+    }
+  }
+}

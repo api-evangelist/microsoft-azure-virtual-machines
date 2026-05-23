@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineInstanceView",
+  "title": "VirtualMachineInstanceView",
+  "type": "object",
+  "description": "The instance view of a virtual machine.",
+  "properties": {
+    "vmAgent": {
+      "type": "object",
+      "description": "The VM Agent running on the virtual machine.",
+      "properties": {
+        "vmAgentVersion": {
+          "type": "string",
+          "description": "The VM Agent full version."
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/InstanceViewStatus"
+          }
+        }
+      }
+    },
+    "disks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The disk name."
+          },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstanceViewStatus"
+            }
+          }
+        }
+      }
+    },
+    "statuses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/InstanceViewStatus"
+      },
+      "description": "The resource status information."
+    },
+    "osName": {
+      "type": "string",
+      "description": "The Operating System running on the virtual machine."
+    },
+    "osVersion": {
+      "type": "string",
+      "description": "The version of Operating System running on the virtual machine."
+    },
+    "computerName": {
+      "type": "string",
+      "description": "The computer name assigned to the virtual machine."
+    }
+  }
+}

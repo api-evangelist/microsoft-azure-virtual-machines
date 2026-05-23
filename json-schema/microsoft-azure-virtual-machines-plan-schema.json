@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Plan",
+  "title": "Plan",
+  "type": "object",
+  "description": "Specifies information about the marketplace image used to create the virtual machine.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The plan ID."
+    },
+    "publisher": {
+      "type": "string",
+      "description": "The publisher ID."
+    },
+    "product": {
+      "type": "string",
+      "description": "Specifies the product of the image from the marketplace."
+    },
+    "promotionCode": {
+      "type": "string",
+      "description": "The promotion code."
+    }
+  }
+}

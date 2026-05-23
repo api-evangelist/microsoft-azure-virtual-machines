@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CloudError",
+  "title": "CloudError",
+  "type": "object",
+  "description": "An error response from the Compute service.",
+  "properties": {
+    "error": {
+      "$ref": "#/components/schemas/ApiError"
+    }
+  }
+}

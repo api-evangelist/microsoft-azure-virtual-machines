@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineInstallPatchesResult",
+  "title": "VirtualMachineInstallPatchesResult",
+  "type": "object",
+  "description": "The result summary of an installation operation.",
+  "properties": {
+    "status": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The overall success or failure status of the operation.",
+      "enum": [
+        "Unknown",
+        "InProgress",
+        "Failed",
+        "Succeeded",
+        "CompletedWithWarnings"
+      ]
+    },
+    "installationActivityId": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The activity ID of the operation."
+    },
+    "rebootStatus": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The reboot state of the VM following completion of the operation.",
+      "enum": [
+        "Unknown",
+        "NotNeeded",
+        "Required",
+        "Started",
+        "Failed",
+        "Completed"
+      ]
+    },
+    "maintenanceWindowExceeded": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Whether the operation ran out of time before it completed all its intended actions."
+    },
+    "notSelectedPatchCount": {
+      "type": "integer",
+      "format": "int32",
+      "readOnly": true,
+      "description": "The number of all available patches but not going to be installed because it didn't match a classification or inclusion list entry."
+    },
+    "installedPatchCount": {
+      "type": "integer",
+      "format": "int32",
+      "readOnly": true,
+      "description": "The number of patches that were installed."
+    },
+    "failedPatchCount": {
+      "type": "integer",
+      "format": "int32",
+      "readOnly": true,
+      "description": "The number of patches that could not be installed."
+    },
+    "startDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true,
+      "description": "The UTC timestamp when the operation began."
+    }
+  }
+}

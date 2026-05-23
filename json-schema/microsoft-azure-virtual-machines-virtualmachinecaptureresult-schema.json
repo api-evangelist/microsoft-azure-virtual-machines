@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineCaptureResult",
+  "title": "VirtualMachineCaptureResult",
+  "type": "object",
+  "description": "Output of virtual machine capture operation.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Resource Id."
+    },
+    "$schema": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The schema of the captured virtual machine."
+    },
+    "contentVersion": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The version of the content."
+    },
+    "parameters": {
+      "type": "object",
+      "readOnly": true,
+      "description": "The parameters of the captured virtual machine."
+    },
+    "resources": {
+      "type": "array",
+      "readOnly": true,
+      "items": {
+        "type": "object"
+      },
+      "description": "A list of resource items of the captured virtual machine."
+    }
+  }
+}

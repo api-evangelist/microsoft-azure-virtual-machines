@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/HardwareProfile",
+  "title": "HardwareProfile",
+  "type": "object",
+  "description": "Specifies the hardware settings for the virtual machine.",
+  "properties": {
+    "vmSize": {
+      "type": "string",
+      "description": "Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using the List all available virtual machine sizes in an availability set, List all available virtual machine sizes in a region, or List all available virtual machine sizes for resizing APIs."
+    }
+  }
+}

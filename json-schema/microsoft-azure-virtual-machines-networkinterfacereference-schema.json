@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NetworkInterfaceReference",
+  "title": "NetworkInterfaceReference",
+  "type": "object",
+  "description": "Describes a network interface reference.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Resource Id."
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "boolean",
+          "description": "Specifies the primary network interface in case the virtual machine has more than 1 network interface."
+        },
+        "deleteOption": {
+          "type": "string",
+          "description": "Specify what happens to the network interface when the VM is deleted.",
+          "enum": [
+            "Delete",
+            "Detach"
+          ]
+        }
+      }
+    }
+  }
+}

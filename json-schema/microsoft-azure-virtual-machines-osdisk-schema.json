@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OSDisk",
+  "title": "OSDisk",
+  "type": "object",
+  "description": "Specifies information about the operating system disk used by the virtual machine.",
+  "required": [
+    "createOption"
+  ],
+  "properties": {
+    "osType": {
+      "type": "string",
+      "description": "This property allows you to specify the type of the OS that is included in the disk.",
+      "enum": [
+        "Windows",
+        "Linux"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "The disk name."
+    },
+    "caching": {
+      "type": "string",
+      "description": "Specifies the caching requirements.",
+      "enum": [
+        "None",
+        "ReadOnly",
+        "ReadWrite"
+      ]
+    },
+    "createOption": {
+      "type": "string",
+      "description": "Specifies how the virtual machine disk should be created.",
+      "enum": [
+        "FromImage",
+        "Empty",
+        "Attach",
+        "Copy",
+        "Restore"
+      ]
+    },
+    "diskSizeGB": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Specifies the size of an empty data disk in gigabytes."
+    },
+    "managedDisk": {
+      "$ref": "#/components/schemas/ManagedDiskParameters"
+    },
+    "deleteOption": {
+      "type": "string",
+      "description": "Specifies whether OS disk should be deleted or detached upon VM deletion.",
+      "enum": [
+        "Delete",
+        "Detach"
+      ]
+    }
+  }
+}

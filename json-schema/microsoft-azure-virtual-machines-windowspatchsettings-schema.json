@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WindowsPatchSettings",
+  "title": "WindowsPatchSettings",
+  "type": "object",
+  "description": "Specifies settings related to VM Guest Patching on Windows.",
+  "properties": {
+    "patchMode": {
+      "type": "string",
+      "description": "Specifies the mode of VM Guest Patching to IaaS virtual machine.",
+      "enum": [
+        "Manual",
+        "AutomaticByOS",
+        "AutomaticByPlatform"
+      ]
+    },
+    "assessmentMode": {
+      "type": "string",
+      "description": "Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.",
+      "enum": [
+        "ImageDefault",
+        "AutomaticByPlatform"
+      ]
+    },
+    "enableHotpatching": {
+      "type": "boolean",
+      "description": "Enables customers to patch their Azure VMs without requiring a reboot."
+    }
+  }
+}

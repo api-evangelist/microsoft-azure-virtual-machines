@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineAssessPatchesResult",
+  "title": "VirtualMachineAssessPatchesResult",
+  "type": "object",
+  "description": "Describes the properties of an AssessPatches result.",
+  "properties": {
+    "status": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The overall success or failure status of the operation.",
+      "enum": [
+        "Unknown",
+        "InProgress",
+        "Failed",
+        "Succeeded",
+        "CompletedWithWarnings"
+      ]
+    },
+    "assessmentActivityId": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The activity ID of the operation."
+    },
+    "rebootPending": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred."
+    },
+    "criticalAndSecurityPatchCount": {
+      "type": "integer",
+      "format": "int32",
+      "readOnly": true,
+      "description": "The number of critical or security patches detected."
+    },
+    "otherPatchCount": {
+      "type": "integer",
+      "format": "int32",
+      "readOnly": true,
+      "description": "The number of all available patches excluding critical and security."
+    },
+    "startDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true,
+      "description": "The UTC timestamp when the operation began."
+    }
+  }
+}

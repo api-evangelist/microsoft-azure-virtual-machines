@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineIdentity",
+  "title": "VirtualMachineIdentity",
+  "type": "object",
+  "description": "Identity for the virtual machine.",
+  "properties": {
+    "principalId": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The principal id of virtual machine identity."
+    },
+    "tenantId": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The tenant id associated with the virtual machine."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of identity used for the virtual machine.",
+      "enum": [
+        "SystemAssigned",
+        "UserAssigned",
+        "SystemAssigned, UserAssigned",
+        "None"
+      ]
+    }
+  }
+}

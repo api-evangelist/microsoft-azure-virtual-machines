@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineUpdate",
+  "title": "VirtualMachineUpdate",
+  "type": "object",
+  "description": "Describes a Virtual Machine Update.",
+  "properties": {
+    "tags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource tags."
+    },
+    "properties": {
+      "$ref": "#/components/schemas/VirtualMachineProperties"
+    },
+    "identity": {
+      "$ref": "#/components/schemas/VirtualMachineIdentity"
+    },
+    "plan": {
+      "$ref": "#/components/schemas/Plan"
+    }
+  }
+}

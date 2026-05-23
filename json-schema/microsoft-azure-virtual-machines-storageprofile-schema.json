@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/StorageProfile",
+  "title": "StorageProfile",
+  "type": "object",
+  "description": "Specifies the storage settings for the virtual machine disks.",
+  "properties": {
+    "imageReference": {
+      "$ref": "#/components/schemas/ImageReference"
+    },
+    "osDisk": {
+      "$ref": "#/components/schemas/OSDisk"
+    },
+    "dataDisks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DataDisk"
+      },
+      "description": "Specifies the parameters that are used to add a data disk to a virtual machine."
+    }
+  }
+}

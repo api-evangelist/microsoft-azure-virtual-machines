@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NetworkProfile",
+  "title": "NetworkProfile",
+  "type": "object",
+  "description": "Specifies the network interfaces or the networking configuration of the virtual machine.",
+  "properties": {
+    "networkInterfaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/NetworkInterfaceReference"
+      },
+      "description": "Specifies the list of resource IDs for the network interfaces associated with the virtual machine."
+    }
+  }
+}

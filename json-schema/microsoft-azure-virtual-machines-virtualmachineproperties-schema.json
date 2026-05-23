@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineProperties",
+  "title": "VirtualMachineProperties",
+  "type": "object",
+  "description": "Describes the properties of a Virtual Machine.",
+  "properties": {
+    "vmId": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS."
+    },
+    "hardwareProfile": {
+      "$ref": "#/components/schemas/HardwareProfile"
+    },
+    "storageProfile": {
+      "$ref": "#/components/schemas/StorageProfile"
+    },
+    "osProfile": {
+      "$ref": "#/components/schemas/OSProfile"
+    },
+    "networkProfile": {
+      "$ref": "#/components/schemas/NetworkProfile"
+    },
+    "diagnosticsProfile": {
+      "$ref": "#/components/schemas/DiagnosticsProfile"
+    },
+    "availabilitySet": {
+      "$ref": "#/components/schemas/SubResource"
+    },
+    "proximityPlacementGroup": {
+      "$ref": "#/components/schemas/SubResource"
+    },
+    "priority": {
+      "type": "string",
+      "description": "Specifies the priority for the virtual machine.",
+      "enum": [
+        "Regular",
+        "Low",
+        "Spot"
+      ]
+    },
+    "evictionPolicy": {
+      "type": "string",
+      "description": "Specifies the eviction policy for the Azure Spot virtual machine.",
+      "enum": [
+        "Deallocate",
+        "Delete"
+      ]
+    },
+    "provisioningState": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The provisioning state."
+    },
+    "host": {
+      "$ref": "#/components/schemas/SubResource"
+    },
+    "hostGroup": {
+      "$ref": "#/components/schemas/SubResource"
+    },
+    "licenseType": {
+      "type": "string",
+      "description": "Specifies that the image or disk that is being used was licensed on-premises."
+    },
+    "capacityReservation": {
+      "type": "object",
+      "description": "Specifies information about the capacity reservation that is used to allocate the virtual machine.",
+      "properties": {
+        "capacityReservationGroup": {
+          "$ref": "#/components/schemas/SubResource"
+        }
+      }
+    },
+    "userData": {
+      "type": "string",
+      "description": "UserData for the VM, which must be base-64 encoded. The maximum size is 64 KB."
+    },
+    "timeCreated": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true,
+      "description": "Specifies the time at which the Virtual Machine resource was created."
+    }
+  }
+}

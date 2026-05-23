@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RetrieveBootDiagnosticsDataResult",
+  "title": "RetrieveBootDiagnosticsDataResult",
+  "type": "object",
+  "description": "The SAS URIs of the console screenshot and serial log blobs.",
+  "properties": {
+    "consoleScreenshotBlobUri": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "description": "The console screenshot blob URI."
+    },
+    "serialConsoleLogBlobUri": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "description": "The serial console log blob URI."
+    }
+  }
+}

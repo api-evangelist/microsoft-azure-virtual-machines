@@ -1,0 +1,8 @@
+name: Azure Virtual Machines Domain Vocabulary
+provider: Azure Virtual Machines
+providerId: microsoft-azure-virtual-machines
+description: Tag-derived vocabulary for the Azure Virtual Machines API surface; sourced from openapi/ tags.
+terms:
+- term: Virtual Machines
+  description: Operations for creating, updating, deleting, and managing the lifecycle of Azure Virtual Machines including
+    power operations, patching, and diagnostics.

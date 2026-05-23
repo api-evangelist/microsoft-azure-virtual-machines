@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WindowsConfiguration",
+  "title": "WindowsConfiguration",
+  "type": "object",
+  "description": "Specifies Windows operating system settings on the virtual machine.",
+  "properties": {
+    "provisionVMAgent": {
+      "type": "boolean",
+      "description": "Indicates whether virtual machine agent should be provisioned on the virtual machine."
+    },
+    "enableAutomaticUpdates": {
+      "type": "boolean",
+      "description": "Indicates whether Automatic Updates is enabled for the Windows virtual machine."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Specifies the time zone of the virtual machine."
+    },
+    "patchSettings": {
+      "$ref": "#/components/schemas/WindowsPatchSettings"
+    }
+  }
+}

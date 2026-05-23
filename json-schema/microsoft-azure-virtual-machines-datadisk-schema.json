@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DataDisk",
+  "title": "DataDisk",
+  "type": "object",
+  "description": "Describes a data disk.",
+  "required": [
+    "lun",
+    "createOption"
+  ],
+  "properties": {
+    "lun": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM."
+    },
+    "name": {
+      "type": "string",
+      "description": "The disk name."
+    },
+    "caching": {
+      "type": "string",
+      "description": "Specifies the caching requirements.",
+      "enum": [
+        "None",
+        "ReadOnly",
+        "ReadWrite"
+      ]
+    },
+    "createOption": {
+      "type": "string",
+      "description": "Specifies how the virtual machine disk should be created.",
+      "enum": [
+        "FromImage",
+        "Empty",
+        "Attach",
+        "Copy",
+        "Restore"
+      ]
+    },
+    "diskSizeGB": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Specifies the size of an empty data disk in gigabytes."
+    },
+    "managedDisk": {
+      "$ref": "#/components/schemas/ManagedDiskParameters"
+    },
+    "deleteOption": {
+      "type": "string",
+      "description": "Specifies whether data disk should be deleted or detached upon VM deletion.",
+      "enum": [
+        "Delete",
+        "Detach"
+      ]
+    }
+  }
+}

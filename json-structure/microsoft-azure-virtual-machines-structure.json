@@ -1,0 +1,483 @@
+{
+  "provider": "Azure Virtual Machines",
+  "providerId": "microsoft-azure-virtual-machines",
+  "kind": "json-structure",
+  "description": "Structural overview of the Azure Virtual Machines API surface; extracted from openapi/.",
+  "schemaCount": 37,
+  "operationCount": 26,
+  "schemas": [
+    {
+      "name": "VirtualMachine",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "location"
+      ]
+    },
+    {
+      "name": "VirtualMachineUpdate",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineProperties",
+      "type": "object",
+      "propertyCount": 17,
+      "required": []
+    },
+    {
+      "name": "HardwareProfile",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "StorageProfile",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "ImageReference",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "OSDisk",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "createOption"
+      ]
+    },
+    {
+      "name": "DataDisk",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "lun",
+        "createOption"
+      ]
+    },
+    {
+      "name": "ManagedDiskParameters",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "OSProfile",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "LinuxConfiguration",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "LinuxPatchSettings",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "WindowsConfiguration",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "WindowsPatchSettings",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "NetworkProfile",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "NetworkInterfaceReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "DiagnosticsProfile",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineIdentity",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Plan",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "SubResource",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineListResult",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineInstanceView",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "InstanceViewStatus",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineSizeListResult",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineSize",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineCaptureParameters",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "vhdPrefix",
+        "destinationContainerName",
+        "overwriteVhds"
+      ]
+    },
+    {
+      "name": "VirtualMachineCaptureResult",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "RunCommandInput",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "commandId"
+      ]
+    },
+    {
+      "name": "RunCommandResult",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineAssessPatchesResult",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "VirtualMachineInstallPatchesParameters",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "rebootSetting"
+      ]
+    },
+    {
+      "name": "VirtualMachineInstallPatchesResult",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "AttachDetachDataDisksRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "RetrieveBootDiagnosticsDataResult",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "CloudError",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ApiError",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "ApiErrorBase",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines",
+      "operationId": "VirtualMachines_List",
+      "summary": "Azure Virtual Machines List virtual machines in a resource group",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines",
+      "operationId": "VirtualMachines_ListAll",
+      "summary": "Azure Virtual Machines List all virtual machines in a subscription",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines",
+      "operationId": "VirtualMachines_ListByLocation",
+      "summary": "Azure Virtual Machines List virtual machines by location",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+      "operationId": "VirtualMachines_Get",
+      "summary": "Azure Virtual Machines Get a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+      "operationId": "VirtualMachines_CreateOrUpdate",
+      "summary": "Azure Virtual Machines Create or update a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+      "operationId": "VirtualMachines_Delete",
+      "summary": "Azure Virtual Machines Delete a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+      "operationId": "VirtualMachines_Update",
+      "summary": "Azure Virtual Machines Update a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView",
+      "operationId": "VirtualMachines_InstanceView",
+      "summary": "Azure Virtual Machines Get the instance view of a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start",
+      "operationId": "VirtualMachines_Start",
+      "summary": "Azure Virtual Machines Start a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff",
+      "operationId": "VirtualMachines_PowerOff",
+      "summary": "Azure Virtual Machines Power off a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate",
+      "operationId": "VirtualMachines_Deallocate",
+      "summary": "Azure Virtual Machines Deallocate a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart",
+      "operationId": "VirtualMachines_Restart",
+      "summary": "Azure Virtual Machines Restart a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy",
+      "operationId": "VirtualMachines_Redeploy",
+      "summary": "Azure Virtual Machines Redeploy a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage",
+      "operationId": "VirtualMachines_Reimage",
+      "summary": "Azure Virtual Machines Reimage a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture",
+      "operationId": "VirtualMachines_Capture",
+      "summary": "Azure Virtual Machines Capture a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize",
+      "operationId": "VirtualMachines_Generalize",
+      "summary": "Azure Virtual Machines Generalize a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks",
+      "operationId": "VirtualMachines_ConvertToManagedDisks",
+      "summary": "Azure Virtual Machines Convert to managed disks",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance",
+      "operationId": "VirtualMachines_PerformMaintenance",
+      "summary": "Azure Virtual Machines Perform maintenance on a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction",
+      "operationId": "VirtualMachines_SimulateEviction",
+      "summary": "Azure Virtual Machines Simulate eviction of a spot virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply",
+      "operationId": "VirtualMachines_Reapply",
+      "summary": "Azure Virtual Machines Reapply a virtual machine state",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData",
+      "operationId": "VirtualMachines_RetrieveBootDiagnosticsData",
+      "summary": "Azure Virtual Machines Retrieve boot diagnostics data",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches",
+      "operationId": "VirtualMachines_AssessPatches",
+      "summary": "Azure Virtual Machines Assess patches on a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches",
+      "operationId": "VirtualMachines_InstallPatches",
+      "summary": "Azure Virtual Machines Install patches on a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks",
+      "operationId": "VirtualMachines_AttachDetachDataDisks",
+      "summary": "Azure Virtual Machines Attach or detach data disks",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes",
+      "operationId": "VirtualMachines_ListAvailableSizes",
+      "summary": "Azure Virtual Machines List available sizes for a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand",
+      "operationId": "VirtualMachines_RunCommand",
+      "summary": "Azure Virtual Machines Run command on a virtual machine",
+      "tags": [
+        "Virtual Machines"
+      ]
+    }
+  ]
+}

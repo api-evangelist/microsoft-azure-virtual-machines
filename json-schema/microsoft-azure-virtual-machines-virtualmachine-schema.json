@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachine",
+  "title": "VirtualMachine",
+  "type": "object",
+  "description": "Describes a Virtual Machine.",
+  "required": [
+    "location"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Resource Id."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Resource name."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Resource type."
+    },
+    "location": {
+      "type": "string",
+      "description": "Resource location."
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource tags."
+    },
+    "properties": {
+      "$ref": "#/components/schemas/VirtualMachineProperties"
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The virtual machine zones."
+    },
+    "identity": {
+      "$ref": "#/components/schemas/VirtualMachineIdentity"
+    },
+    "plan": {
+      "$ref": "#/components/schemas/Plan"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SubResource",
+  "title": "SubResource",
+  "type": "object",
+  "description": "Reference to a sub-resource.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Resource Id."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VirtualMachineCaptureParameters",
+  "title": "VirtualMachineCaptureParameters",
+  "type": "object",
+  "description": "Capture virtual machine parameters.",
+  "required": [
+    "vhdPrefix",
+    "destinationContainerName",
+    "overwriteVhds"
+  ],
+  "properties": {
+    "vhdPrefix": {
+      "type": "string",
+      "description": "The captured virtual hard disk's name prefix."
+    },
+    "destinationContainerName": {
+      "type": "string",
+      "description": "The destination container name."
+    },
+    "overwriteVhds": {
+      "type": "boolean",
+      "description": "Specifies whether to overwrite the destination virtual hard disk, in case of conflict."
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RunCommandResult",
+  "title": "RunCommandResult",
+  "type": "object",
+  "description": "Run command operation response.",
+  "properties": {
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/InstanceViewStatus"
+      },
+      "description": "Run command operation response."
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LinuxConfiguration",
+  "title": "LinuxConfiguration",
+  "type": "object",
+  "description": "Specifies the Linux operating system settings on the virtual machine.",
+  "properties": {
+    "disablePasswordAuthentication": {
+      "type": "boolean",
+      "description": "Specifies whether password authentication should be disabled."
+    },
+    "ssh": {
+      "type": "object",
+      "description": "Specifies the ssh key configuration for a Linux OS.",
+      "properties": {
+        "publicKeys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Specifies the full path on the created VM where ssh public key is stored."
+              },
+              "keyData": {
+                "type": "string",
+                "description": "SSH public key certificate used to authenticate with the VM through ssh."
+              }
+            }
+          }
+        }
+      }
+    },
+    "provisionVMAgent": {
+      "type": "boolean",
+      "description": "Indicates whether virtual machine agent should be provisioned on the virtual machine."
+    },
+    "patchSettings": {
+      "$ref": "#/components/schemas/LinuxPatchSettings"
+    }
+  }
+}

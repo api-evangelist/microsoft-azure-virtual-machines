@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OSProfile",
+  "title": "OSProfile",
+  "type": "object",
+  "description": "Specifies the operating system settings for the virtual machine.",
+  "properties": {
+    "computerName": {
+      "type": "string",
+      "description": "Specifies the host OS name of the virtual machine. Cannot be updated after the VM is created."
+    },
+    "adminUsername": {
+      "type": "string",
+      "description": "Specifies the name of the administrator account."
+    },
+    "adminPassword": {
+      "type": "string",
+      "format": "password",
+      "description": "Specifies the password of the administrator account. Write-only property."
+    },
+    "linuxConfiguration": {
+      "$ref": "#/components/schemas/LinuxConfiguration"
+    },
+    "windowsConfiguration": {
+      "$ref": "#/components/schemas/WindowsConfiguration"
+    }
+  }
+}

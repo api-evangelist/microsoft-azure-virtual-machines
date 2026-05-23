@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttachDetachDataDisksRequest",
+  "title": "AttachDetachDataDisksRequest",
+  "type": "object",
+  "description": "Specifies the input for attaching and detaching data disks.",
+  "properties": {
+    "dataDisksToAttach": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DataDisk"
+      },
+      "description": "The list of managed data disks to be attached."
+    },
+    "dataDisksToDetach": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "diskId": {
+            "type": "string",
+            "description": "ID of the managed data disk."
+          },
+          "detachOption": {
+            "type": "string",
+            "description": "Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment.",
+            "enum": [
+              "ForceDetach"
+            ]
+          }
+        }
+      },
+      "description": "The list of managed data disks to be detached."
+    }
+  }
+}

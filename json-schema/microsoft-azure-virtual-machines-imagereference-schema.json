@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ImageReference",
+  "title": "ImageReference",
+  "type": "object",
+  "description": "Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images.",
+  "properties": {
+    "publisher": {
+      "type": "string",
+      "description": "The image publisher."
+    },
+    "offer": {
+      "type": "string",
+      "description": "Specifies the offer of the platform image or marketplace image used to create the virtual machine."
+    },
+    "sku": {
+      "type": "string",
+      "description": "The image SKU."
+    },
+    "version": {
+      "type": "string",
+      "description": "Specifies the version of the platform image or marketplace image used to create the virtual machine."
+    },
+    "exactVersion": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Specifies in decimal numbers the version of platform image or marketplace image used to create the virtual machine."
+    },
+    "id": {
+      "type": "string",
+      "description": "Resource Id."
+    }
+  }
+}
