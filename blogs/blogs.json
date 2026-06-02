@@ -2,12 +2,20 @@
   "repo": "microsoft-azure-virtual-machines",
   "feeds": [
     {
-      "source": "https://azure.microsoft.com/en-us/blog/",
+      "source": "https://azure.microsoft.com/en-us/blog/feed/",
       "feed_url": "https://azure.microsoft.com/en-us/blog/feed/",
-      "title": "Microsoft Azure Blog",
-      "saved": 8
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://status.azure.com/",
+      "feed_url": "https://status.azure.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "post_count": 20,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 25,
+  "fetched": "2026-06-01T23:35:02Z"
 }
