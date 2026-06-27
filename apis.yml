@@ -37,7 +37,7 @@ apis:
           https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/virtualMachines.json
       - type: Pricing
         url: https://azure.microsoft.com/en-us/pricing/details/virtual-machines/
-      - type: SLA
+      - type: ServiceLevelAgreement
         url: https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/
       - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/overview
@@ -50,7 +50,7 @@ apis:
       - type: Authentication
         url: >-
           https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-managed-identities-work-vm
-      - type: Quickstart
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli
       - type: RateLimits
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/quotas
@@ -248,7 +248,7 @@ common:
     url: https://azure.microsoft.com/en-us/pricing/details/virtual-machines/
   - type: Website
     url: https://azure.microsoft.com/en-us/products/virtual-machines
-  - type: SignUp
+  - type: Signup
     url: https://azure.microsoft.com/en-us/free
   - type: Login
     url: https://portal.azure.com
@@ -274,7 +274,7 @@ common:
     url: https://learn.microsoft.com/en-us/azure/virtual-machines/faq-for-disks
   - type: YouTube
     url: https://www.youtube.com/c/MicrosoftAzure
-  - type: SLA
+  - type: ServiceLevelAgreement
     url: https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/
 maintainers:
   - FN: Kin Lane
