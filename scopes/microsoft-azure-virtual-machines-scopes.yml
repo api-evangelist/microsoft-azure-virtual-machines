@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/azure-virtual-machines-openapi.yml
+schemes:
+- name: OAuth2Auth
+  source: openapi/azure-virtual-machines-openapi.yml
+  flows:
+  - flow: implicit
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+  description: Azure Active Directory OAuth2 Flow
+scopes:
+- scope: user_impersonation
+  description: impersonate your user account
+  flows:
+  - implicit
+  sources:
+  - openapi/azure-virtual-machines-openapi.yml

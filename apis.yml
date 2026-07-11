@@ -224,6 +224,8 @@ apis:
       - type: Reference
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-group-share
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-azure-virtual-machines-scopes.yml
   - type: Portal
     url: https://portal.azure.com
   - type: Authentication
