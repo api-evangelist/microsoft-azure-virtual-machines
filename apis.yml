@@ -224,6 +224,8 @@ apis:
       - type: Reference
         url: https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-group-share
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-azure-virtual-machines-agentic-access.yml
   - type: DomainSecurity
     url: security/microsoft-azure-virtual-machines-domain-security.yml
   - type: Authentication
