@@ -1,0 +1,1883 @@
+openapi: 3.1.0
+info:
+  title: Azure Virtual Machines REST API
+  description: >-
+    REST API for creating and managing Azure Virtual Machines. Provides
+    operations for provisioning, starting, stopping, deallocating, restarting,
+    reimaging, capturing, and deleting virtual machines, as well as managing
+    data disks, extensions, patching, and run commands. All operations follow
+    the Azure Resource Manager pattern and require OAuth 2.0 authentication
+    via Microsoft Entra ID.
+  version: '2024-07-01'
+  contact:
+    name: Microsoft Azure Support
+    url: https://azure.microsoft.com/en-us/support/
+  license:
+    name: Microsoft API License
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  termsOfService: https://azure.microsoft.com/en-us/support/legal/
+
+externalDocs:
+  description: Azure Virtual Machines REST API Reference
+  url: https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines
+
+servers:
+  - url: https://management.azure.com
+    description: Azure Resource Manager Production Endpoint
+
+security:
+  - OAuth2Auth: []
+
+tags:
+  - name: Virtual Machines
+    description: >-
+      Operations for creating, updating, deleting, and managing the lifecycle
+      of Azure Virtual Machines including power operations, patching, and
+      diagnostics.
+
+paths:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines:
+    get:
+      operationId: VirtualMachines_List
+      summary: Azure Virtual Machines List virtual machines in a resource group
+      description: >-
+        Lists all of the virtual machines in the specified resource group. Use
+        the nextLink property in the response to get the next page of virtual
+        machines.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: $filter
+          in: query
+          description: >-
+            The system query option to filter VMs returned in the response.
+            Allowed value is 'virtualMachineScaleSet/id' eq
+            /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'.
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          description: >-
+            The expand expression to apply on the operation. 'instanceView'
+            retrieves a snapshot of the runtime properties of the virtual
+            machine that is managed by the platform and can change outside of
+            control plane operations.
+          schema:
+            type: string
+            enum:
+              - instanceView
+      responses:
+        '200':
+          description: Successfully retrieved the list of virtual machines.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineListResult'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines:
+    get:
+      operationId: VirtualMachines_ListAll
+      summary: Azure Virtual Machines List all virtual machines in a subscription
+      description: >-
+        Lists all of the virtual machines in the specified subscription. Use
+        the nextLink property in the response to get the next page of virtual
+        machines.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: statusOnly
+          in: query
+          description: >-
+            statusOnly=true enables fetching run time status of all Virtual
+            Machines in the subscription.
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          description: >-
+            The system query option to filter VMs returned in the response.
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          description: >-
+            The expand expression to apply on the operation.
+          schema:
+            type: string
+            enum:
+              - instanceView
+      responses:
+        '200':
+          description: Successfully retrieved the list of virtual machines.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineListResult'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines:
+    get:
+      operationId: VirtualMachines_ListByLocation
+      summary: Azure Virtual Machines List virtual machines by location
+      description: >-
+        Gets all the virtual machines under the specified subscription for
+        the specified location.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/LocationParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully retrieved the list of virtual machines.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineListResult'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}:
+    put:
+      operationId: VirtualMachines_CreateOrUpdate
+      summary: Azure Virtual Machines Create or update a virtual machine
+      description: >-
+        The operation to create or update a virtual machine. Please note some
+        properties can be set only during virtual machine creation.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Parameters supplied to the create or update virtual machine operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachine'
+      responses:
+        '200':
+          description: Successfully updated the virtual machine.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '201':
+          description: Successfully created the virtual machine.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+    get:
+      operationId: VirtualMachines_Get
+      summary: Azure Virtual Machines Get a virtual machine
+      description: >-
+        Retrieves information about the model view or the instance view of a
+        virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: $expand
+          in: query
+          description: >-
+            The expand expression to apply on the operation. 'instanceView'
+            retrieves a snapshot of the runtime properties of the virtual
+            machine.
+          schema:
+            type: string
+            enum:
+              - instanceView
+              - userData
+      responses:
+        '200':
+          description: Successfully retrieved the virtual machine.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+    patch:
+      operationId: VirtualMachines_Update
+      summary: Azure Virtual Machines Update a virtual machine
+      description: >-
+        The operation to update a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Parameters supplied to the update virtual machine operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachineUpdate'
+      responses:
+        '200':
+          description: Successfully updated the virtual machine.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+    delete:
+      operationId: VirtualMachines_Delete
+      summary: Azure Virtual Machines Delete a virtual machine
+      description: >-
+        The operation to delete a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: forceDeletion
+          in: query
+          description: >-
+            Optional parameter to force delete virtual machines.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully deleted the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        '204':
+          description: No content. The virtual machine does not exist.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView
+  : get:
+      operationId: VirtualMachines_InstanceView
+      summary: Azure Virtual Machines Get the instance view of a virtual machine
+      description: >-
+        Retrieves information about the run-time state of a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully retrieved the instance view.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceView'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start
+  : post:
+      operationId: VirtualMachines_Start
+      summary: Azure Virtual Machines Start a virtual machine
+      description: >-
+        The operation to start a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully started the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff
+  : post:
+      operationId: VirtualMachines_PowerOff
+      summary: Azure Virtual Machines Power off a virtual machine
+      description: >-
+        The operation to power off (stop) a virtual machine. The virtual machine
+        can be restarted with the same provisioned resources. You are still
+        charged for this virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: skipShutdown
+          in: query
+          description: >-
+            The parameter to request non-graceful VM shutdown. True value for
+            this flag indicates non-graceful shutdown whereas false indicates
+            otherwise.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successfully powered off the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate
+  : post:
+      operationId: VirtualMachines_Deallocate
+      summary: Azure Virtual Machines Deallocate a virtual machine
+      description: >-
+        Shuts down the virtual machine and releases the compute resources. You
+        are not billed for the compute resources that this virtual machine uses.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: hibernate
+          in: query
+          description: >-
+            Optional parameter to hibernate a virtual machine.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully deallocated the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart
+  : post:
+      operationId: VirtualMachines_Restart
+      summary: Azure Virtual Machines Restart a virtual machine
+      description: >-
+        The operation to restart a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully restarted the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy
+  : post:
+      operationId: VirtualMachines_Redeploy
+      summary: Azure Virtual Machines Redeploy a virtual machine
+      description: >-
+        Shuts down the virtual machine, moves it to a new node, and powers
+        it back on.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully redeployed the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage
+  : post:
+      operationId: VirtualMachines_Reimage
+      summary: Azure Virtual Machines Reimage a virtual machine
+      description: >-
+        Reimages (upgrades the operating system) a virtual machine which does
+        not have an ephemeral OS disk. For virtual machines that have an
+        ephemeral OS disk, the virtual machine is reset to initial state.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully reimaged the virtual machine.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture
+  : post:
+      operationId: VirtualMachines_Capture
+      summary: Azure Virtual Machines Capture a virtual machine
+      description: >-
+        Captures the VM by copying virtual hard disks of the VM and outputs a
+        template that can be used to create similar VMs.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Parameters supplied to the capture virtual machine operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachineCaptureParameters'
+      responses:
+        '200':
+          description: Successfully captured the virtual machine.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineCaptureResult'
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize
+  : post:
+      operationId: VirtualMachines_Generalize
+      summary: Azure Virtual Machines Generalize a virtual machine
+      description: >-
+        Sets the OS state of the virtual machine to generalized. It is
+        recommended to sysprep the virtual machine before performing this
+        operation.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully generalized the virtual machine.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks
+  : post:
+      operationId: VirtualMachines_ConvertToManagedDisks
+      summary: Azure Virtual Machines Convert to managed disks
+      description: >-
+        Converts virtual machine disks from blob-based to managed disks.
+        Virtual machine must be stop-deallocated before invoking this operation.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully converted to managed disks.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance
+  : post:
+      operationId: VirtualMachines_PerformMaintenance
+      summary: Azure Virtual Machines Perform maintenance on a virtual machine
+      description: >-
+        The operation to perform maintenance on a virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully performed maintenance.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction
+  : post:
+      operationId: VirtualMachines_SimulateEviction
+      summary: Azure Virtual Machines Simulate eviction of a spot virtual machine
+      description: >-
+        The operation to simulate the eviction of a spot virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '204':
+          description: Successfully simulated eviction.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply
+  : post:
+      operationId: VirtualMachines_Reapply
+      summary: Azure Virtual Machines Reapply a virtual machine state
+      description: >-
+        The operation to reapply a virtual machine's state.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully reapplied.
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/retrieveBootDiagnosticsData
+  : post:
+      operationId: VirtualMachines_RetrieveBootDiagnosticsData
+      summary: Azure Virtual Machines Retrieve boot diagnostics data
+      description: >-
+        The operation to retrieve SAS URIs for a virtual machine's boot
+        diagnostic logs.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+        - name: sasUriExpirationTimeInMinutes
+          in: query
+          description: >-
+            Expiration duration in minutes for the SAS URIs with a value between
+            1 to 1440 minutes.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully retrieved boot diagnostics data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveBootDiagnosticsDataResult'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches
+  : post:
+      operationId: VirtualMachines_AssessPatches
+      summary: Azure Virtual Machines Assess patches on a virtual machine
+      description: >-
+        Assess patches on the VM.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully assessed patches.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineAssessPatchesResult'
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches
+  : post:
+      operationId: VirtualMachines_InstallPatches
+      summary: Azure Virtual Machines Install patches on a virtual machine
+      description: >-
+        Installs patches on the VM.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Input for InstallPatches as directly received by the API.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachineInstallPatchesParameters'
+      responses:
+        '200':
+          description: Successfully installed patches.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstallPatchesResult'
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/attachDetachDataDisks
+  : post:
+      operationId: VirtualMachines_AttachDetachDataDisks
+      summary: Azure Virtual Machines Attach or detach data disks
+      description: >-
+        Attach and detach data disks to/from the virtual machine.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Parameters supplied to the attach/detach data disks operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachDetachDataDisksRequest'
+      responses:
+        '200':
+          description: Successfully attached/detached data disks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfile'
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes
+  : get:
+      operationId: VirtualMachines_ListAvailableSizes
+      summary: Azure Virtual Machines List available sizes for a virtual machine
+      description: >-
+        Lists all available virtual machine sizes to which the specified
+        virtual machine can be resized.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      responses:
+        '200':
+          description: Successfully retrieved available sizes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineSizeListResult'
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand
+  : post:
+      operationId: VirtualMachines_RunCommand
+      summary: Azure Virtual Machines Run command on a virtual machine
+      description: >-
+        Run command on the VM.
+      tags:
+        - Virtual Machines
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionIdParameter'
+        - $ref: '#/components/parameters/ResourceGroupNameParameter'
+        - $ref: '#/components/parameters/VmNameParameter'
+        - $ref: '#/components/parameters/ApiVersionParameter'
+      requestBody:
+        required: true
+        description: Parameters supplied to the run command operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunCommandInput'
+      responses:
+        '200':
+          description: Successfully ran the command.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunCommandResult'
+        '202':
+          description: Accepted. The operation will complete asynchronously.
+        default:
+          description: Error response describing why the operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+
+components:
+  securitySchemes:
+    OAuth2Auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow
+      flows:
+        implicit:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+          scopes:
+            user_impersonation: impersonate your user account
+
+  parameters:
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      required: true
+      description: >-
+        Subscription credentials which uniquely identify Microsoft Azure
+        subscription. The subscription ID forms part of the URI for every
+        service call.
+      schema:
+        type: string
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      required: true
+      description: The name of the resource group.
+      schema:
+        type: string
+    VmNameParameter:
+      name: vmName
+      in: path
+      required: true
+      description: The name of the virtual machine.
+      schema:
+        type: string
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      required: true
+      description: Client API version.
+      schema:
+        type: string
+        default: '2024-07-01'
+    LocationParameter:
+      name: location
+      in: path
+      required: true
+      description: The location for which virtual machines are listed.
+      schema:
+        type: string
+
+  schemas:
+    VirtualMachine:
+      type: object
+      description: Describes a Virtual Machine.
+      required:
+        - location
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Resource Id.
+        name:
+          type: string
+          readOnly: true
+          description: Resource name.
+        type:
+          type: string
+          readOnly: true
+          description: Resource type.
+        location:
+          type: string
+          description: Resource location.
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+          description: Resource tags.
+        properties:
+          $ref: '#/components/schemas/VirtualMachineProperties'
+        zones:
+          type: array
+          items:
+            type: string
+          description: The virtual machine zones.
+        identity:
+          $ref: '#/components/schemas/VirtualMachineIdentity'
+        plan:
+          $ref: '#/components/schemas/Plan'
+
+    VirtualMachineUpdate:
+      type: object
+      description: Describes a Virtual Machine Update.
+      properties:
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+          description: Resource tags.
+        properties:
+          $ref: '#/components/schemas/VirtualMachineProperties'
+        identity:
+          $ref: '#/components/schemas/VirtualMachineIdentity'
+        plan:
+          $ref: '#/components/schemas/Plan'
+
+    VirtualMachineProperties:
+      type: object
+      description: Describes the properties of a Virtual Machine.
+      properties:
+        vmId:
+          type: string
+          readOnly: true
+          description: >-
+            Specifies the VM unique ID which is a 128-bits identifier that is
+            encoded and stored in all Azure IaaS VMs SMBIOS.
+        hardwareProfile:
+          $ref: '#/components/schemas/HardwareProfile'
+        storageProfile:
+          $ref: '#/components/schemas/StorageProfile'
+        osProfile:
+          $ref: '#/components/schemas/OSProfile'
+        networkProfile:
+          $ref: '#/components/schemas/NetworkProfile'
+        diagnosticsProfile:
+          $ref: '#/components/schemas/DiagnosticsProfile'
+        availabilitySet:
+          $ref: '#/components/schemas/SubResource'
+        proximityPlacementGroup:
+          $ref: '#/components/schemas/SubResource'
+        priority:
+          type: string
+          description: >-
+            Specifies the priority for the virtual machine.
+          enum:
+            - Regular
+            - Low
+            - Spot
+        evictionPolicy:
+          type: string
+          description: >-
+            Specifies the eviction policy for the Azure Spot virtual machine.
+          enum:
+            - Deallocate
+            - Delete
+        provisioningState:
+          type: string
+          readOnly: true
+          description: The provisioning state.
+        host:
+          $ref: '#/components/schemas/SubResource'
+        hostGroup:
+          $ref: '#/components/schemas/SubResource'
+        licenseType:
+          type: string
+          description: >-
+            Specifies that the image or disk that is being used was licensed
+            on-premises.
+        capacityReservation:
+          type: object
+          description: >-
+            Specifies information about the capacity reservation that is used
+            to allocate the virtual machine.
+          properties:
+            capacityReservationGroup:
+              $ref: '#/components/schemas/SubResource'
+        userData:
+          type: string
+          description: >-
+            UserData for the VM, which must be base-64 encoded. The maximum
+            size is 64 KB.
+        timeCreated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: >-
+            Specifies the time at which the Virtual Machine resource was created.
+
+    HardwareProfile:
+      type: object
+      description: Specifies the hardware settings for the virtual machine.
+      properties:
+        vmSize:
+          type: string
+          description: >-
+            Specifies the size of the virtual machine. The enum data type is
+            currently deprecated and will be removed by December 23rd 2023.
+            The recommended way to get the list of available sizes is using
+            the List all available virtual machine sizes in an availability
+            set, List all available virtual machine sizes in a region, or
+            List all available virtual machine sizes for resizing APIs.
+
+    StorageProfile:
+      type: object
+      description: Specifies the storage settings for the virtual machine disks.
+      properties:
+        imageReference:
+          $ref: '#/components/schemas/ImageReference'
+        osDisk:
+          $ref: '#/components/schemas/OSDisk'
+        dataDisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataDisk'
+          description: >-
+            Specifies the parameters that are used to add a data disk to a
+            virtual machine.
+
+    ImageReference:
+      type: object
+      description: >-
+        Specifies information about the image to use. You can specify
+        information about platform images, marketplace images, or virtual
+        machine images.
+      properties:
+        publisher:
+          type: string
+          description: The image publisher.
+        offer:
+          type: string
+          description: >-
+            Specifies the offer of the platform image or marketplace image
+            used to create the virtual machine.
+        sku:
+          type: string
+          description: The image SKU.
+        version:
+          type: string
+          description: >-
+            Specifies the version of the platform image or marketplace image
+            used to create the virtual machine.
+        exactVersion:
+          type: string
+          readOnly: true
+          description: >-
+            Specifies in decimal numbers the version of platform image or
+            marketplace image used to create the virtual machine.
+        id:
+          type: string
+          description: Resource Id.
+
+    OSDisk:
+      type: object
+      description: >-
+        Specifies information about the operating system disk used by the
+        virtual machine.
+      required:
+        - createOption
+      properties:
+        osType:
+          type: string
+          description: >-
+            This property allows you to specify the type of the OS that is
+            included in the disk.
+          enum:
+            - Windows
+            - Linux
+        name:
+          type: string
+          description: The disk name.
+        caching:
+          type: string
+          description: Specifies the caching requirements.
+          enum:
+            - None
+            - ReadOnly
+            - ReadWrite
+        createOption:
+          type: string
+          description: >-
+            Specifies how the virtual machine disk should be created.
+          enum:
+            - FromImage
+            - Empty
+            - Attach
+            - Copy
+            - Restore
+        diskSizeGB:
+          type: integer
+          format: int32
+          description: >-
+            Specifies the size of an empty data disk in gigabytes.
+        managedDisk:
+          $ref: '#/components/schemas/ManagedDiskParameters'
+        deleteOption:
+          type: string
+          description: >-
+            Specifies whether OS disk should be deleted or detached upon VM
+            deletion.
+          enum:
+            - Delete
+            - Detach
+
+    DataDisk:
+      type: object
+      description: Describes a data disk.
+      required:
+        - lun
+        - createOption
+      properties:
+        lun:
+          type: integer
+          format: int32
+          description: >-
+            Specifies the logical unit number of the data disk. This value is
+            used to identify data disks within the VM.
+        name:
+          type: string
+          description: The disk name.
+        caching:
+          type: string
+          description: Specifies the caching requirements.
+          enum:
+            - None
+            - ReadOnly
+            - ReadWrite
+        createOption:
+          type: string
+          description: Specifies how the virtual machine disk should be created.
+          enum:
+            - FromImage
+            - Empty
+            - Attach
+            - Copy
+            - Restore
+        diskSizeGB:
+          type: integer
+          format: int32
+          description: >-
+            Specifies the size of an empty data disk in gigabytes.
+        managedDisk:
+          $ref: '#/components/schemas/ManagedDiskParameters'
+        deleteOption:
+          type: string
+          description: >-
+            Specifies whether data disk should be deleted or detached upon VM
+            deletion.
+          enum:
+            - Delete
+            - Detach
+
+    ManagedDiskParameters:
+      type: object
+      description: The parameters of a managed disk.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+        storageAccountType:
+          type: string
+          description: >-
+            Specifies the storage account type for the managed disk.
+          enum:
+            - Premium_LRS
+            - Premium_ZRS
+            - Standard_LRS
+            - StandardSSD_LRS
+            - StandardSSD_ZRS
+            - UltraSSD_LRS
+            - PremiumV2_LRS
+
+    OSProfile:
+      type: object
+      description: Specifies the operating system settings for the virtual machine.
+      properties:
+        computerName:
+          type: string
+          description: >-
+            Specifies the host OS name of the virtual machine. Cannot be
+            updated after the VM is created.
+        adminUsername:
+          type: string
+          description: >-
+            Specifies the name of the administrator account.
+        adminPassword:
+          type: string
+          format: password
+          description: >-
+            Specifies the password of the administrator account. Write-only
+            property.
+        linuxConfiguration:
+          $ref: '#/components/schemas/LinuxConfiguration'
+        windowsConfiguration:
+          $ref: '#/components/schemas/WindowsConfiguration'
+
+    LinuxConfiguration:
+      type: object
+      description: >-
+        Specifies the Linux operating system settings on the virtual machine.
+      properties:
+        disablePasswordAuthentication:
+          type: boolean
+          description: >-
+            Specifies whether password authentication should be disabled.
+        ssh:
+          type: object
+          description: Specifies the ssh key configuration for a Linux OS.
+          properties:
+            publicKeys:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: string
+                    description: >-
+                      Specifies the full path on the created VM where ssh
+                      public key is stored.
+                  keyData:
+                    type: string
+                    description: >-
+                      SSH public key certificate used to authenticate with
+                      the VM through ssh.
+        provisionVMAgent:
+          type: boolean
+          description: >-
+            Indicates whether virtual machine agent should be provisioned on
+            the virtual machine.
+        patchSettings:
+          $ref: '#/components/schemas/LinuxPatchSettings'
+
+    LinuxPatchSettings:
+      type: object
+      description: Specifies settings related to VM Guest Patching on Linux.
+      properties:
+        patchMode:
+          type: string
+          description: >-
+            Specifies the mode of VM Guest Patching to IaaS virtual machine.
+          enum:
+            - ImageDefault
+            - AutomaticByPlatform
+        assessmentMode:
+          type: string
+          description: >-
+            Specifies the mode of VM Guest Patch Assessment for the IaaS
+            virtual machine.
+          enum:
+            - ImageDefault
+            - AutomaticByPlatform
+
+    WindowsConfiguration:
+      type: object
+      description: >-
+        Specifies Windows operating system settings on the virtual machine.
+      properties:
+        provisionVMAgent:
+          type: boolean
+          description: >-
+            Indicates whether virtual machine agent should be provisioned on
+            the virtual machine.
+        enableAutomaticUpdates:
+          type: boolean
+          description: >-
+            Indicates whether Automatic Updates is enabled for the Windows
+            virtual machine.
+        timeZone:
+          type: string
+          description: >-
+            Specifies the time zone of the virtual machine.
+        patchSettings:
+          $ref: '#/components/schemas/WindowsPatchSettings'
+
+    WindowsPatchSettings:
+      type: object
+      description: Specifies settings related to VM Guest Patching on Windows.
+      properties:
+        patchMode:
+          type: string
+          description: >-
+            Specifies the mode of VM Guest Patching to IaaS virtual machine.
+          enum:
+            - Manual
+            - AutomaticByOS
+            - AutomaticByPlatform
+        assessmentMode:
+          type: string
+          description: >-
+            Specifies the mode of VM Guest Patch Assessment for the IaaS
+            virtual machine.
+          enum:
+            - ImageDefault
+            - AutomaticByPlatform
+        enableHotpatching:
+          type: boolean
+          description: >-
+            Enables customers to patch their Azure VMs without requiring a
+            reboot.
+
+    NetworkProfile:
+      type: object
+      description: >-
+        Specifies the network interfaces or the networking configuration of
+        the virtual machine.
+      properties:
+        networkInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkInterfaceReference'
+          description: >-
+            Specifies the list of resource IDs for the network interfaces
+            associated with the virtual machine.
+
+    NetworkInterfaceReference:
+      type: object
+      description: Describes a network interface reference.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+        properties:
+          type: object
+          properties:
+            primary:
+              type: boolean
+              description: >-
+                Specifies the primary network interface in case the virtual
+                machine has more than 1 network interface.
+            deleteOption:
+              type: string
+              description: >-
+                Specify what happens to the network interface when the VM is
+                deleted.
+              enum:
+                - Delete
+                - Detach
+
+    DiagnosticsProfile:
+      type: object
+      description: >-
+        Specifies the boot diagnostic settings state.
+      properties:
+        bootDiagnostics:
+          type: object
+          description: >-
+            Boot Diagnostics is a debugging feature which allows you to view
+            Console Output and Screenshot to diagnose VM status.
+          properties:
+            enabled:
+              type: boolean
+              description: >-
+                Whether boot diagnostics should be enabled on the Virtual
+                Machine.
+            storageUri:
+              type: string
+              format: uri
+              description: >-
+                URI of the storage account to use for placing the console
+                output and screenshot.
+
+    VirtualMachineIdentity:
+      type: object
+      description: Identity for the virtual machine.
+      properties:
+        principalId:
+          type: string
+          readOnly: true
+          description: >-
+            The principal id of virtual machine identity.
+        tenantId:
+          type: string
+          readOnly: true
+          description: >-
+            The tenant id associated with the virtual machine.
+        type:
+          type: string
+          description: >-
+            The type of identity used for the virtual machine.
+          enum:
+            - SystemAssigned
+            - UserAssigned
+            - SystemAssigned, UserAssigned
+            - None
+
+    Plan:
+      type: object
+      description: >-
+        Specifies information about the marketplace image used to create the
+        virtual machine.
+      properties:
+        name:
+          type: string
+          description: The plan ID.
+        publisher:
+          type: string
+          description: The publisher ID.
+        product:
+          type: string
+          description: >-
+            Specifies the product of the image from the marketplace.
+        promotionCode:
+          type: string
+          description: The promotion code.
+
+    SubResource:
+      type: object
+      description: Reference to a sub-resource.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+
+    VirtualMachineListResult:
+      type: object
+      description: The List Virtual Machine operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachine'
+          description: The list of virtual machines.
+        nextLink:
+          type: string
+          format: uri
+          description: >-
+            The URI to fetch the next page of VMs. Call ListNext() with this
+            URI to fetch the next page.
+
+    VirtualMachineInstanceView:
+      type: object
+      description: The instance view of a virtual machine.
+      properties:
+        vmAgent:
+          type: object
+          description: The VM Agent running on the virtual machine.
+          properties:
+            vmAgentVersion:
+              type: string
+              description: The VM Agent full version.
+            statuses:
+              type: array
+              items:
+                $ref: '#/components/schemas/InstanceViewStatus'
+        disks:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The disk name.
+              statuses:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceViewStatus'
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceViewStatus'
+          description: The resource status information.
+        osName:
+          type: string
+          description: The Operating System running on the virtual machine.
+        osVersion:
+          type: string
+          description: The version of Operating System running on the virtual machine.
+        computerName:
+          type: string
+          description: The computer name assigned to the virtual machine.
+
+    InstanceViewStatus:
+      type: object
+      description: Instance view status.
+      properties:
+        code:
+          type: string
+          description: The status code.
+        level:
+          type: string
+          description: The level code.
+          enum:
+            - Info
+            - Warning
+            - Error
+        displayStatus:
+          type: string
+          description: The short localizable label for the status.
+        message:
+          type: string
+          description: The detailed status message.
+        time:
+          type: string
+          format: date-time
+          description: The time of the status.
+
+    VirtualMachineSizeListResult:
+      type: object
+      description: The List Virtual Machine operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineSize'
+          description: The list of virtual machine sizes.
+
+    VirtualMachineSize:
+      type: object
+      description: Describes the properties of a VM size.
+      properties:
+        name:
+          type: string
+          description: The name of the virtual machine size.
+        numberOfCores:
+          type: integer
+          format: int32
+          description: >-
+            The number of cores supported by the virtual machine size.
+        osDiskSizeInMB:
+          type: integer
+          format: int32
+          description: The OS disk size allowed by the virtual machine size.
+        resourceDiskSizeInMB:
+          type: integer
+          format: int32
+          description: The resource disk size allowed by the virtual machine size.
+        memoryInMB:
+          type: integer
+          format: int32
+          description: The amount of memory in MB supported by the virtual machine size.
+        maxDataDiskCount:
+          type: integer
+          format: int32
+          description: >-
+            The maximum number of data disks allowed by the virtual machine
+            size.
+
+    VirtualMachineCaptureParameters:
+      type: object
+      description: Capture virtual machine parameters.
+      required:
+        - vhdPrefix
+        - destinationContainerName
+        - overwriteVhds
+      properties:
+        vhdPrefix:
+          type: string
+          description: The captured virtual hard disk's name prefix.
+        destinationContainerName:
+          type: string
+          description: The destination container name.
+        overwriteVhds:
+          type: boolean
+          description: >-
+            Specifies whether to overwrite the destination virtual hard disk,
+            in case of conflict.
+
+    VirtualMachineCaptureResult:
+      type: object
+      description: Output of virtual machine capture operation.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+        '$schema':
+          type: string
+          readOnly: true
+          description: The schema of the captured virtual machine.
+        contentVersion:
+          type: string
+          readOnly: true
+          description: The version of the content.
+        parameters:
+          type: object
+          readOnly: true
+          description: The parameters of the captured virtual machine.
+        resources:
+          type: array
+          readOnly: true
+          items:
+            type: object
+          description: A list of resource items of the captured virtual machine.
+
+    RunCommandInput:
+      type: object
+      description: Capture virtual machine parameters.
+      required:
+        - commandId
+      properties:
+        commandId:
+          type: string
+          description: The run command id.
+        script:
+          type: array
+          items:
+            type: string
+          description: Optional. The script to be executed.
+        parameters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The run command parameter name.
+              value:
+                type: string
+                description: The run command parameter value.
+          description: The run command parameters.
+
+    RunCommandResult:
+      type: object
+      description: Run command operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceViewStatus'
+          description: Run command operation response.
+
+    VirtualMachineAssessPatchesResult:
+      type: object
+      description: Describes the properties of an AssessPatches result.
+      properties:
+        status:
+          type: string
+          readOnly: true
+          description: The overall success or failure status of the operation.
+          enum:
+            - Unknown
+            - InProgress
+            - Failed
+            - Succeeded
+            - CompletedWithWarnings
+        assessmentActivityId:
+          type: string
+          readOnly: true
+          description: The activity ID of the operation.
+        rebootPending:
+          type: boolean
+          readOnly: true
+          description: >-
+            The overall reboot status of the VM. It will be true when partially
+            installed patches require a reboot to complete installation but
+            the reboot has not yet occurred.
+        criticalAndSecurityPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of critical or security patches detected.
+        otherPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of all available patches excluding critical and security.
+        startDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The UTC timestamp when the operation began.
+
+    VirtualMachineInstallPatchesParameters:
+      type: object
+      description: Input for InstallPatches as directly received by the API.
+      required:
+        - rebootSetting
+      properties:
+        maximumDuration:
+          type: string
+          description: >-
+            Specifies the maximum amount of time that the operation will run.
+            It must be an ISO 8601-compliant duration string such as PT4H
+            (4 hours).
+        rebootSetting:
+          type: string
+          description: >-
+            Defines when it is acceptable to reboot a VM during a software
+            update operation.
+          enum:
+            - IfRequired
+            - NeverReboot
+            - AlwaysReboot
+
+    VirtualMachineInstallPatchesResult:
+      type: object
+      description: The result summary of an installation operation.
+      properties:
+        status:
+          type: string
+          readOnly: true
+          description: The overall success or failure status of the operation.
+          enum:
+            - Unknown
+            - InProgress
+            - Failed
+            - Succeeded
+            - CompletedWithWarnings
+        installationActivityId:
+          type: string
+          readOnly: true
+          description: The activity ID of the operation.
+        rebootStatus:
+          type: string
+          readOnly: true
+          description: The reboot state of the VM following completion of the operation.
+          enum:
+            - Unknown
+            - NotNeeded
+            - Required
+            - Started
+            - Failed
+            - Completed
+        maintenanceWindowExceeded:
+          type: boolean
+          readOnly: true
+          description: >-
+            Whether the operation ran out of time before it completed all its
+            intended actions.
+        notSelectedPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: >-
+            The number of all available patches but not going to be installed
+            because it didn't match a classification or inclusion list entry.
+        installedPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of patches that were installed.
+        failedPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of patches that could not be installed.
+        startDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The UTC timestamp when the operation began.
+
+    AttachDetachDataDisksRequest:
+      type: object
+      description: Specifies the input for attaching and detaching data disks.
+      properties:
+        dataDisksToAttach:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataDisk'
+          description: The list of managed data disks to be attached.
+        dataDisksToDetach:
+          type: array
+          items:
+            type: object
+            properties:
+              diskId:
+                type: string
+                description: >-
+                  ID of the managed data disk.
+              detachOption:
+                type: string
+                description: >-
+                  Specifies the detach behavior to be used while detaching
+                  a disk or which is already in the process of detachment.
+                enum:
+                  - ForceDetach
+          description: The list of managed data disks to be detached.
+
+    RetrieveBootDiagnosticsDataResult:
+      type: object
+      description: The SAS URIs of the console screenshot and serial log blobs.
+      properties:
+        consoleScreenshotBlobUri:
+          type: string
+          format: uri
+          readOnly: true
+          description: The console screenshot blob URI.
+        serialConsoleLogBlobUri:
+          type: string
+          format: uri
+          readOnly: true
+          description: The serial console log blob URI.
+
+    CloudError:
+      type: object
+      description: An error response from the Compute service.
+      properties:
+        error:
+          $ref: '#/components/schemas/ApiError'
+
+    ApiError:
+      type: object
+      description: Api error.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        target:
+          type: string
+          description: The target of the particular error.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorBase'
+          description: The Api error details.
+        innererror:
+          type: object
+          description: The Api inner error.
+          properties:
+            exceptiontype:
+              type: string
+              description: The exception type.
+            errordetail:
+              type: string
+              description: The internal error message or exception dump.
+
+    ApiErrorBase:
+      type: object
+      description: Api error base.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        target:
+          type: string
+          description: The target of the particular error.

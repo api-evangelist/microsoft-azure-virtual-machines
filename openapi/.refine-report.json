@@ -1,0 +1,14 @@
+{
+  "provider": "microsoft-azure-virtual-machines",
+  "sources": [
+    "microsoft-azure-virtual-machines-virtual-machines-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-azure-virtual-machines-virtual-machines-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
