@@ -19,6 +19,12 @@ image: https://azure.microsoft.com/svghandler/virtual-machines/
 tags:
   - Cloud Computing
   - Compute
+  - Infrastructure-as-a-Service
+  - Infrastructure
+  - Virtual Machines
+tags_raw:
+  - Cloud Computing
+  - Compute
   - IaaS
   - Infrastructure
   - Virtual Machines
@@ -36,6 +42,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/
   baseURL: https://management.azure.com
   tags:
+  - Auto-Scaling
+  - Load Balancing
+  - Virtual Machine Scale Sets
+  tags_raw:
   - Autoscaling
   - Load Balancing
   - Virtual Machine Scale Sets
@@ -81,6 +91,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage
   baseURL: https://management.azure.com
   tags:
+  - Image
+  - Marketplace
+  - VM Images
+  tags_raw:
   - Images
   - Marketplace
   - VM Images
@@ -153,6 +167,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/azure/virtual-machines/co-location
   baseURL: https://management.azure.com
   tags:
+  - Colocation
+  - Low Latency
+  - Proximity Placement Groups
+  tags_raw:
   - Co-Location
   - Low Latency
   - Proximity Placement Groups
