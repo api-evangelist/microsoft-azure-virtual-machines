@@ -2,6 +2,18 @@ name: Azure Virtual Machines
 description: >-
   Azure Virtual Machines (VMs) is one of several types of on-demand, scalable computing resources that Azure offers. VMs
   give you the flexibility of virtualization without having to buy and maintain physical hardware.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
