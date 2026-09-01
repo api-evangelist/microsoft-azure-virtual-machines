@@ -31,7 +31,7 @@ image: https://azure.microsoft.com/svghandler/virtual-machines/
 tags:
   - Cloud Computing
   - Compute
-  - IaaS
+  - Infrastructure-as-a-Service
   - Infrastructure
   - Virtual Machines
 tags_raw:
@@ -179,7 +179,7 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/azure/virtual-machines/co-location
   baseURL: https://management.azure.com
   tags:
-  - Co-Location
+  - Colocation
   - Low Latency
   - Proximity Placement Groups
   tags_raw:
