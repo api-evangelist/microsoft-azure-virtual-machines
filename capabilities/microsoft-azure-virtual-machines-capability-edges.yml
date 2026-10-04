@@ -1,0 +1,26 @@
+slug: microsoft-azure-virtual-machines
+provider: Azure Virtual Machines
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Virtual Machines
+  spec_file: microsoft-azure-virtual-machines-virtual-machines-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: '"REST API for creating and managing Azure Virtual Machines. Provides operations for provisioning,
+    starting, stopping, deallocating, restarting... as well as managing data disks, extensions, patching"'
+  reason: Operations provision and control compute instances and attached disks — cloud compute/storage
+    infrastructure management, mapping to IT Infrastructure Management. Not a product-engineering or tenant
+    capability; this is infrastructure lifecycle control.

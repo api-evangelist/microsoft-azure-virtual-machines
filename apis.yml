@@ -274,6 +274,9 @@ apis:
   - type: SDK - Go
     url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/arm/compute
 common:
+  - type: CapabilityMap
+    url: capabilities/microsoft-azure-virtual-machines-capability-edges.yml
+    name: Azure Virtual Machines Business Capability Map
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/azure-virtual-machines/overview
   - type: AgenticAccess
