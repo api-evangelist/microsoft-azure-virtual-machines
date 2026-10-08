@@ -274,6 +274,10 @@ apis:
   - type: SDK - Go
     url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/arm/compute
 common:
+  - type: Plans
+    url: plans/microsoft-azure-virtual-machines-plans-pricing.yml
+  - type: FinOps
+    url: finops/microsoft-azure-virtual-machines-finops.yml
   - type: CapabilityMap
     url: capabilities/microsoft-azure-virtual-machines-capability-edges.yml
     name: Azure Virtual Machines Business Capability Map
