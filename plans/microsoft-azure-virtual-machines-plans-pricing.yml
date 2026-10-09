@@ -295,3 +295,96 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
     url: https://azure.microsoft.com/services/virtual-machines/
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - compute
+  - negotiated
+  - request
+  plans:
+  - name: ARM Control Plane (Free)
+    access: freemium
+    model: metered
+    model_how: derived
+    units:
+    - request
+    periods:
+    - per-use
+  - name: Pay-As-You-Go — B-series (Burstable) Linux
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: Pay-As-You-Go — D-series (General Purpose) Linux
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: Pay-As-You-Go — F-series (Compute Optimized) Linux
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: Pay-As-You-Go — Windows Server premium
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    - other
+    periods:
+    - month
+    - per-use
+  - name: Spot VMs
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: Reserved Instance — 1 Year
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - negotiated
+    periods:
+    - month
+  - name: Reserved Instance — 3 Year
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - negotiated
+    periods:
+    - month
+  - name: Azure Savings Plan for Compute
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise Agreement / Microsoft Customer Agreement
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - month
