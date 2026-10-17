@@ -755,6 +755,29 @@ paths:
                 $ref: '#/components/schemas/CloudError'
 components:
   schemas:
+    ImageReference:
+      type: object
+      description: Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images.
+      properties:
+        publisher:
+          type: string
+          description: The image publisher.
+        offer:
+          type: string
+          description: Specifies the offer of the platform image or marketplace image used to create the virtual machine.
+        sku:
+          type: string
+          description: The image SKU.
+        version:
+          type: string
+          description: Specifies the version of the platform image or marketplace image used to create the virtual machine.
+        exactVersion:
+          type: string
+          readOnly: true
+          description: Specifies in decimal numbers the version of platform image or marketplace image used to create the virtual machine.
+        id:
+          type: string
+          description: Resource Id.
     NetworkProfile:
       type: object
       description: Specifies the network interfaces or the networking configuration of the virtual machine.
@@ -764,19 +787,82 @@ components:
           items:
             $ref: '#/components/schemas/NetworkInterfaceReference'
           description: Specifies the list of resource IDs for the network interfaces associated with the virtual machine.
-    ApiErrorBase:
+    WindowsPatchSettings:
       type: object
-      description: Api error base.
+      description: Specifies settings related to VM Guest Patching on Windows.
       properties:
-        code:
+        patchMode:
           type: string
-          description: The error code.
-        message:
+          description: Specifies the mode of VM Guest Patching to IaaS virtual machine.
+          enum:
+          - Manual
+          - AutomaticByOS
+          - AutomaticByPlatform
+        assessmentMode:
           type: string
-          description: The error message.
-        target:
+          description: Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.
+          enum:
+          - ImageDefault
+          - AutomaticByPlatform
+        enableHotpatching:
+          type: boolean
+          description: Enables customers to patch their Azure VMs without requiring a reboot.
+    CloudError:
+      type: object
+      description: An error response from the Compute service.
+      properties:
+        error:
+          $ref: '#/components/schemas/ApiError'
+    VirtualMachineListResult:
+      type: object
+      description: The List Virtual Machine operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachine'
+          description: The list of virtual machines.
+        nextLink:
           type: string
-          description: The target of the particular error.
+          format: uri
+          description: The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page.
+    VirtualMachine:
+      type: object
+      description: Describes a Virtual Machine.
+      required:
+      - location
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Resource Id.
+        name:
+          type: string
+          readOnly: true
+          description: Resource name.
+        type:
+          type: string
+          readOnly: true
+          description: Resource type.
+        location:
+          type: string
+          description: Resource location.
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+          description: Resource tags.
+        properties:
+          $ref: '#/components/schemas/VirtualMachineProperties'
+        zones:
+          type: array
+          items:
+            type: string
+          description: The virtual machine zones.
+        identity:
+          $ref: '#/components/schemas/VirtualMachineIdentity'
+        plan:
+          $ref: '#/components/schemas/Plan'
     DiagnosticsProfile:
       type: object
       description: Specifies the boot diagnostic settings state.
@@ -792,6 +878,15 @@ components:
               type: string
               format: uri
               description: URI of the storage account to use for placing the console output and screenshot.
+    RunCommandResult:
+      type: object
+      description: Run command operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceViewStatus'
+          description: Run command operation response.
     WindowsConfiguration:
       type: object
       description: Specifies Windows operating system settings on the virtual machine.
@@ -807,6 +902,15 @@ components:
           description: Specifies the time zone of the virtual machine.
         patchSettings:
           $ref: '#/components/schemas/WindowsPatchSettings'
+    VirtualMachineSizeListResult:
+      type: object
+      description: The List Virtual Machine operation response.
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineSize'
+          description: The list of virtual machine sizes.
     VirtualMachineProperties:
       type: object
       description: Describes the properties of a Virtual Machine.
@@ -867,45 +971,74 @@ components:
           format: date-time
           readOnly: true
           description: Specifies the time at which the Virtual Machine resource was created.
-    VirtualMachineInstallPatchesParameters:
+    VirtualMachineInstanceView:
       type: object
-      description: Input for InstallPatches as directly received by the API.
-      required:
-      - rebootSetting
+      description: The instance view of a virtual machine.
       properties:
-        maximumDuration:
-          type: string
-          description: Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours).
-        rebootSetting:
-          type: string
-          description: Defines when it is acceptable to reboot a VM during a software update operation.
-          enum:
-          - IfRequired
-          - NeverReboot
-          - AlwaysReboot
-    AttachDetachDataDisksRequest:
-      type: object
-      description: Specifies the input for attaching and detaching data disks.
-      properties:
-        dataDisksToAttach:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataDisk'
-          description: The list of managed data disks to be attached.
-        dataDisksToDetach:
+        vmAgent:
+          type: object
+          description: The VM Agent running on the virtual machine.
+          properties:
+            vmAgentVersion:
+              type: string
+              description: The VM Agent full version.
+            statuses:
+              type: array
+              items:
+                $ref: '#/components/schemas/InstanceViewStatus'
+        disks:
           type: array
           items:
             type: object
             properties:
-              diskId:
+              name:
                 type: string
-                description: ID of the managed data disk.
-              detachOption:
-                type: string
-                description: Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment.
-                enum:
-                - ForceDetach
-          description: The list of managed data disks to be detached.
+                description: The disk name.
+              statuses:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceViewStatus'
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceViewStatus'
+          description: The resource status information.
+        osName:
+          type: string
+          description: The Operating System running on the virtual machine.
+        osVersion:
+          type: string
+          description: The version of Operating System running on the virtual machine.
+        computerName:
+          type: string
+          description: The computer name assigned to the virtual machine.
+    VirtualMachineSize:
+      type: object
+      description: Describes the properties of a VM size.
+      properties:
+        name:
+          type: string
+          description: The name of the virtual machine size.
+        numberOfCores:
+          type: integer
+          format: int32
+          description: The number of cores supported by the virtual machine size.
+        osDiskSizeInMB:
+          type: integer
+          format: int32
+          description: The OS disk size allowed by the virtual machine size.
+        resourceDiskSizeInMB:
+          type: integer
+          format: int32
+          description: The resource disk size allowed by the virtual machine size.
+        memoryInMB:
+          type: integer
+          format: int32
+          description: The amount of memory in MB supported by the virtual machine size.
+        maxDataDiskCount:
+          type: integer
+          format: int32
+          description: The maximum number of data disks allowed by the virtual machine size.
     DataDisk:
       type: object
       description: Describes a data disk.
@@ -948,15 +1081,49 @@ components:
           enum:
           - Delete
           - Detach
-    VirtualMachineSizeListResult:
+    OSDisk:
       type: object
-      description: The List Virtual Machine operation response.
+      description: Specifies information about the operating system disk used by the virtual machine.
+      required:
+      - createOption
       properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualMachineSize'
-          description: The list of virtual machine sizes.
+        osType:
+          type: string
+          description: This property allows you to specify the type of the OS that is included in the disk.
+          enum:
+          - Windows
+          - Linux
+        name:
+          type: string
+          description: The disk name.
+        caching:
+          type: string
+          description: Specifies the caching requirements.
+          enum:
+          - None
+          - ReadOnly
+          - ReadWrite
+        createOption:
+          type: string
+          description: Specifies how the virtual machine disk should be created.
+          enum:
+          - FromImage
+          - Empty
+          - Attach
+          - Copy
+          - Restore
+        diskSizeGB:
+          type: integer
+          format: int32
+          description: Specifies the size of an empty data disk in gigabytes.
+        managedDisk:
+          $ref: '#/components/schemas/ManagedDiskParameters'
+        deleteOption:
+          type: string
+          description: Specifies whether OS disk should be deleted or detached upon VM deletion.
+          enum:
+          - Delete
+          - Detach
     VirtualMachineUpdate:
       type: object
       description: Describes a Virtual Machine Update.
@@ -972,6 +1139,209 @@ components:
           $ref: '#/components/schemas/VirtualMachineIdentity'
         plan:
           $ref: '#/components/schemas/Plan'
+    Plan:
+      type: object
+      description: Specifies information about the marketplace image used to create the virtual machine.
+      properties:
+        name:
+          type: string
+          description: The plan ID.
+        publisher:
+          type: string
+          description: The publisher ID.
+        product:
+          type: string
+          description: Specifies the product of the image from the marketplace.
+        promotionCode:
+          type: string
+          description: The promotion code.
+    VirtualMachineCaptureParameters:
+      type: object
+      description: Capture virtual machine parameters.
+      required:
+      - vhdPrefix
+      - destinationContainerName
+      - overwriteVhds
+      properties:
+        vhdPrefix:
+          type: string
+          description: The captured virtual hard disk's name prefix.
+        destinationContainerName:
+          type: string
+          description: The destination container name.
+        overwriteVhds:
+          type: boolean
+          description: Specifies whether to overwrite the destination virtual hard disk, in case of conflict.
+    VirtualMachineAssessPatchesResult:
+      type: object
+      description: Describes the properties of an AssessPatches result.
+      properties:
+        status:
+          type: string
+          readOnly: true
+          description: The overall success or failure status of the operation.
+          enum:
+          - Unknown
+          - InProgress
+          - Failed
+          - Succeeded
+          - CompletedWithWarnings
+        assessmentActivityId:
+          type: string
+          readOnly: true
+          description: The activity ID of the operation.
+        rebootPending:
+          type: boolean
+          readOnly: true
+          description: The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred.
+        criticalAndSecurityPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of critical or security patches detected.
+        otherPatchCount:
+          type: integer
+          format: int32
+          readOnly: true
+          description: The number of all available patches excluding critical and security.
+        startDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The UTC timestamp when the operation began.
+    LinuxPatchSettings:
+      type: object
+      description: Specifies settings related to VM Guest Patching on Linux.
+      properties:
+        patchMode:
+          type: string
+          description: Specifies the mode of VM Guest Patching to IaaS virtual machine.
+          enum:
+          - ImageDefault
+          - AutomaticByPlatform
+        assessmentMode:
+          type: string
+          description: Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.
+          enum:
+          - ImageDefault
+          - AutomaticByPlatform
+    VirtualMachineInstallPatchesParameters:
+      type: object
+      description: Input for InstallPatches as directly received by the API.
+      required:
+      - rebootSetting
+      properties:
+        maximumDuration:
+          type: string
+          description: Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours).
+        rebootSetting:
+          type: string
+          description: Defines when it is acceptable to reboot a VM during a software update operation.
+          enum:
+          - IfRequired
+          - NeverReboot
+          - AlwaysReboot
+    ApiErrorBase:
+      type: object
+      description: Api error base.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        target:
+          type: string
+          description: The target of the particular error.
+    AttachDetachDataDisksRequest:
+      type: object
+      description: Specifies the input for attaching and detaching data disks.
+      properties:
+        dataDisksToAttach:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataDisk'
+          description: The list of managed data disks to be attached.
+        dataDisksToDetach:
+          type: array
+          items:
+            type: object
+            properties:
+              diskId:
+                type: string
+                description: ID of the managed data disk.
+              detachOption:
+                type: string
+                description: Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment.
+                enum:
+                - ForceDetach
+          description: The list of managed data disks to be detached.
+    RetrieveBootDiagnosticsDataResult:
+      type: object
+      description: The SAS URIs of the console screenshot and serial log blobs.
+      properties:
+        consoleScreenshotBlobUri:
+          type: string
+          format: uri
+          readOnly: true
+          description: The console screenshot blob URI.
+        serialConsoleLogBlobUri:
+          type: string
+          format: uri
+          readOnly: true
+          description: The serial console log blob URI.
+    VirtualMachineCaptureResult:
+      type: object
+      description: Output of virtual machine capture operation.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+        $schema:
+          type: string
+          readOnly: true
+          description: The schema of the captured virtual machine.
+        contentVersion:
+          type: string
+          readOnly: true
+          description: The version of the content.
+        parameters:
+          type: object
+          readOnly: true
+          description: The parameters of the captured virtual machine.
+        resources:
+          type: array
+          readOnly: true
+          items:
+            type: object
+          description: A list of resource items of the captured virtual machine.
+    HardwareProfile:
+      type: object
+      description: Specifies the hardware settings for the virtual machine.
+      properties:
+        vmSize:
+          type: string
+          description: Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using the List all available virtual machine sizes in an availability set, List all available virtual machine sizes in a region, or List all available virtual machine sizes for resizing APIs.
+    NetworkInterfaceReference:
+      type: object
+      description: Describes a network interface reference.
+      properties:
+        id:
+          type: string
+          description: Resource Id.
+        properties:
+          type: object
+          properties:
+            primary:
+              type: boolean
+              description: Specifies the primary network interface in case the virtual machine has more than 1 network interface.
+            deleteOption:
+              type: string
+              description: Specify what happens to the network interface when the VM is deleted.
+              enum:
+              - Delete
+              - Detach
     LinuxConfiguration:
       type: object
       description: Specifies the Linux operating system settings on the virtual machine.
@@ -999,154 +1369,6 @@ components:
           description: Indicates whether virtual machine agent should be provisioned on the virtual machine.
         patchSettings:
           $ref: '#/components/schemas/LinuxPatchSettings'
-    ImageReference:
-      type: object
-      description: Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images.
-      properties:
-        publisher:
-          type: string
-          description: The image publisher.
-        offer:
-          type: string
-          description: Specifies the offer of the platform image or marketplace image used to create the virtual machine.
-        sku:
-          type: string
-          description: The image SKU.
-        version:
-          type: string
-          description: Specifies the version of the platform image or marketplace image used to create the virtual machine.
-        exactVersion:
-          type: string
-          readOnly: true
-          description: Specifies in decimal numbers the version of platform image or marketplace image used to create the virtual machine.
-        id:
-          type: string
-          description: Resource Id.
-    StorageProfile:
-      type: object
-      description: Specifies the storage settings for the virtual machine disks.
-      properties:
-        imageReference:
-          $ref: '#/components/schemas/ImageReference'
-        osDisk:
-          $ref: '#/components/schemas/OSDisk'
-        dataDisks:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataDisk'
-          description: Specifies the parameters that are used to add a data disk to a virtual machine.
-    RunCommandResult:
-      type: object
-      description: Run command operation response.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceViewStatus'
-          description: Run command operation response.
-    RunCommandInput:
-      type: object
-      description: Capture virtual machine parameters.
-      required:
-      - commandId
-      properties:
-        commandId:
-          type: string
-          description: The run command id.
-        script:
-          type: array
-          items:
-            type: string
-          description: Optional. The script to be executed.
-        parameters:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The run command parameter name.
-              value:
-                type: string
-                description: The run command parameter value.
-          description: The run command parameters.
-    WindowsPatchSettings:
-      type: object
-      description: Specifies settings related to VM Guest Patching on Windows.
-      properties:
-        patchMode:
-          type: string
-          description: Specifies the mode of VM Guest Patching to IaaS virtual machine.
-          enum:
-          - Manual
-          - AutomaticByOS
-          - AutomaticByPlatform
-        assessmentMode:
-          type: string
-          description: Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.
-          enum:
-          - ImageDefault
-          - AutomaticByPlatform
-        enableHotpatching:
-          type: boolean
-          description: Enables customers to patch their Azure VMs without requiring a reboot.
-    CloudError:
-      type: object
-      description: An error response from the Compute service.
-      properties:
-        error:
-          $ref: '#/components/schemas/ApiError'
-    VirtualMachineIdentity:
-      type: object
-      description: Identity for the virtual machine.
-      properties:
-        principalId:
-          type: string
-          readOnly: true
-          description: The principal id of virtual machine identity.
-        tenantId:
-          type: string
-          readOnly: true
-          description: The tenant id associated with the virtual machine.
-        type:
-          type: string
-          description: The type of identity used for the virtual machine.
-          enum:
-          - SystemAssigned
-          - UserAssigned
-          - SystemAssigned, UserAssigned
-          - None
-    HardwareProfile:
-      type: object
-      description: Specifies the hardware settings for the virtual machine.
-      properties:
-        vmSize:
-          type: string
-          description: Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using the List all available virtual machine sizes in an availability set, List all available virtual machine sizes in a region, or List all available virtual machine sizes for resizing APIs.
-    InstanceViewStatus:
-      type: object
-      description: Instance view status.
-      properties:
-        code:
-          type: string
-          description: The status code.
-        level:
-          type: string
-          description: The level code.
-          enum:
-          - Info
-          - Warning
-          - Error
-        displayStatus:
-          type: string
-          description: The short localizable label for the status.
-        message:
-          type: string
-          description: The detailed status message.
-        time:
-          type: string
-          format: date-time
-          description: The time of the status.
     VirtualMachineInstallPatchesResult:
       type: object
       description: The result summary of an installation operation.
@@ -1200,251 +1422,6 @@ components:
           format: date-time
           readOnly: true
           description: The UTC timestamp when the operation began.
-    SubResource:
-      type: object
-      description: Reference to a sub-resource.
-      properties:
-        id:
-          type: string
-          description: Resource Id.
-    LinuxPatchSettings:
-      type: object
-      description: Specifies settings related to VM Guest Patching on Linux.
-      properties:
-        patchMode:
-          type: string
-          description: Specifies the mode of VM Guest Patching to IaaS virtual machine.
-          enum:
-          - ImageDefault
-          - AutomaticByPlatform
-        assessmentMode:
-          type: string
-          description: Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.
-          enum:
-          - ImageDefault
-          - AutomaticByPlatform
-    OSDisk:
-      type: object
-      description: Specifies information about the operating system disk used by the virtual machine.
-      required:
-      - createOption
-      properties:
-        osType:
-          type: string
-          description: This property allows you to specify the type of the OS that is included in the disk.
-          enum:
-          - Windows
-          - Linux
-        name:
-          type: string
-          description: The disk name.
-        caching:
-          type: string
-          description: Specifies the caching requirements.
-          enum:
-          - None
-          - ReadOnly
-          - ReadWrite
-        createOption:
-          type: string
-          description: Specifies how the virtual machine disk should be created.
-          enum:
-          - FromImage
-          - Empty
-          - Attach
-          - Copy
-          - Restore
-        diskSizeGB:
-          type: integer
-          format: int32
-          description: Specifies the size of an empty data disk in gigabytes.
-        managedDisk:
-          $ref: '#/components/schemas/ManagedDiskParameters'
-        deleteOption:
-          type: string
-          description: Specifies whether OS disk should be deleted or detached upon VM deletion.
-          enum:
-          - Delete
-          - Detach
-    VirtualMachineAssessPatchesResult:
-      type: object
-      description: Describes the properties of an AssessPatches result.
-      properties:
-        status:
-          type: string
-          readOnly: true
-          description: The overall success or failure status of the operation.
-          enum:
-          - Unknown
-          - InProgress
-          - Failed
-          - Succeeded
-          - CompletedWithWarnings
-        assessmentActivityId:
-          type: string
-          readOnly: true
-          description: The activity ID of the operation.
-        rebootPending:
-          type: boolean
-          readOnly: true
-          description: The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred.
-        criticalAndSecurityPatchCount:
-          type: integer
-          format: int32
-          readOnly: true
-          description: The number of critical or security patches detected.
-        otherPatchCount:
-          type: integer
-          format: int32
-          readOnly: true
-          description: The number of all available patches excluding critical and security.
-        startDateTime:
-          type: string
-          format: date-time
-          readOnly: true
-          description: The UTC timestamp when the operation began.
-    VirtualMachine:
-      type: object
-      description: Describes a Virtual Machine.
-      required:
-      - location
-      properties:
-        id:
-          type: string
-          readOnly: true
-          description: Resource Id.
-        name:
-          type: string
-          readOnly: true
-          description: Resource name.
-        type:
-          type: string
-          readOnly: true
-          description: Resource type.
-        location:
-          type: string
-          description: Resource location.
-        tags:
-          type: object
-          additionalProperties:
-            type: string
-          description: Resource tags.
-        properties:
-          $ref: '#/components/schemas/VirtualMachineProperties'
-        zones:
-          type: array
-          items:
-            type: string
-          description: The virtual machine zones.
-        identity:
-          $ref: '#/components/schemas/VirtualMachineIdentity'
-        plan:
-          $ref: '#/components/schemas/Plan'
-    VirtualMachineCaptureParameters:
-      type: object
-      description: Capture virtual machine parameters.
-      required:
-      - vhdPrefix
-      - destinationContainerName
-      - overwriteVhds
-      properties:
-        vhdPrefix:
-          type: string
-          description: The captured virtual hard disk's name prefix.
-        destinationContainerName:
-          type: string
-          description: The destination container name.
-        overwriteVhds:
-          type: boolean
-          description: Specifies whether to overwrite the destination virtual hard disk, in case of conflict.
-    Plan:
-      type: object
-      description: Specifies information about the marketplace image used to create the virtual machine.
-      properties:
-        name:
-          type: string
-          description: The plan ID.
-        publisher:
-          type: string
-          description: The publisher ID.
-        product:
-          type: string
-          description: Specifies the product of the image from the marketplace.
-        promotionCode:
-          type: string
-          description: The promotion code.
-    VirtualMachineListResult:
-      type: object
-      description: The List Virtual Machine operation response.
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualMachine'
-          description: The list of virtual machines.
-        nextLink:
-          type: string
-          format: uri
-          description: The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page.
-    ManagedDiskParameters:
-      type: object
-      description: The parameters of a managed disk.
-      properties:
-        id:
-          type: string
-          description: Resource Id.
-        storageAccountType:
-          type: string
-          description: Specifies the storage account type for the managed disk.
-          enum:
-          - Premium_LRS
-          - Premium_ZRS
-          - Standard_LRS
-          - StandardSSD_LRS
-          - StandardSSD_ZRS
-          - UltraSSD_LRS
-          - PremiumV2_LRS
-    VirtualMachineInstanceView:
-      type: object
-      description: The instance view of a virtual machine.
-      properties:
-        vmAgent:
-          type: object
-          description: The VM Agent running on the virtual machine.
-          properties:
-            vmAgentVersion:
-              type: string
-              description: The VM Agent full version.
-            statuses:
-              type: array
-              items:
-                $ref: '#/components/schemas/InstanceViewStatus'
-        disks:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The disk name.
-              statuses:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InstanceViewStatus'
-        statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceViewStatus'
-          description: The resource status information.
-        osName:
-          type: string
-          description: The Operating System running on the virtual machine.
-        osVersion:
-          type: string
-          description: The version of Operating System running on the virtual machine.
-        computerName:
-          type: string
-          description: The computer name assigned to the virtual machine.
     ApiError:
       type: object
       description: Api error.
@@ -1473,72 +1450,13 @@ components:
             errordetail:
               type: string
               description: The internal error message or exception dump.
-    VirtualMachineSize:
+    SubResource:
       type: object
-      description: Describes the properties of a VM size.
-      properties:
-        name:
-          type: string
-          description: The name of the virtual machine size.
-        numberOfCores:
-          type: integer
-          format: int32
-          description: The number of cores supported by the virtual machine size.
-        osDiskSizeInMB:
-          type: integer
-          format: int32
-          description: The OS disk size allowed by the virtual machine size.
-        resourceDiskSizeInMB:
-          type: integer
-          format: int32
-          description: The resource disk size allowed by the virtual machine size.
-        memoryInMB:
-          type: integer
-          format: int32
-          description: The amount of memory in MB supported by the virtual machine size.
-        maxDataDiskCount:
-          type: integer
-          format: int32
-          description: The maximum number of data disks allowed by the virtual machine size.
-    RetrieveBootDiagnosticsDataResult:
-      type: object
-      description: The SAS URIs of the console screenshot and serial log blobs.
-      properties:
-        consoleScreenshotBlobUri:
-          type: string
-          format: uri
-          readOnly: true
-          description: The console screenshot blob URI.
-        serialConsoleLogBlobUri:
-          type: string
-          format: uri
-          readOnly: true
-          description: The serial console log blob URI.
-    VirtualMachineCaptureResult:
-      type: object
-      description: Output of virtual machine capture operation.
+      description: Reference to a sub-resource.
       properties:
         id:
           type: string
           description: Resource Id.
-        $schema:
-          type: string
-          readOnly: true
-          description: The schema of the captured virtual machine.
-        contentVersion:
-          type: string
-          readOnly: true
-          description: The version of the content.
-        parameters:
-          type: object
-          readOnly: true
-          description: The parameters of the captured virtual machine.
-        resources:
-          type: array
-          readOnly: true
-          items:
-            type: object
-          description: A list of resource items of the captured virtual machine.
     OSProfile:
       type: object
       description: Specifies the operating system settings for the virtual machine.
@@ -1557,31 +1475,121 @@ components:
           $ref: '#/components/schemas/LinuxConfiguration'
         windowsConfiguration:
           $ref: '#/components/schemas/WindowsConfiguration'
-    NetworkInterfaceReference:
+    InstanceViewStatus:
       type: object
-      description: Describes a network interface reference.
+      description: Instance view status.
+      properties:
+        code:
+          type: string
+          description: The status code.
+        level:
+          type: string
+          description: The level code.
+          enum:
+          - Info
+          - Warning
+          - Error
+        displayStatus:
+          type: string
+          description: The short localizable label for the status.
+        message:
+          type: string
+          description: The detailed status message.
+        time:
+          type: string
+          format: date-time
+          description: The time of the status.
+    ManagedDiskParameters:
+      type: object
+      description: The parameters of a managed disk.
       properties:
         id:
           type: string
           description: Resource Id.
-        properties:
-          type: object
-          properties:
-            primary:
-              type: boolean
-              description: Specifies the primary network interface in case the virtual machine has more than 1 network interface.
-            deleteOption:
-              type: string
-              description: Specify what happens to the network interface when the VM is deleted.
-              enum:
-              - Delete
-              - Detach
+        storageAccountType:
+          type: string
+          description: Specifies the storage account type for the managed disk.
+          enum:
+          - Premium_LRS
+          - Premium_ZRS
+          - Standard_LRS
+          - StandardSSD_LRS
+          - StandardSSD_ZRS
+          - UltraSSD_LRS
+          - PremiumV2_LRS
+    VirtualMachineIdentity:
+      type: object
+      description: Identity for the virtual machine.
+      properties:
+        principalId:
+          type: string
+          readOnly: true
+          description: The principal id of virtual machine identity.
+        tenantId:
+          type: string
+          readOnly: true
+          description: The tenant id associated with the virtual machine.
+        type:
+          type: string
+          description: The type of identity used for the virtual machine.
+          enum:
+          - SystemAssigned
+          - UserAssigned
+          - SystemAssigned, UserAssigned
+          - None
+    StorageProfile:
+      type: object
+      description: Specifies the storage settings for the virtual machine disks.
+      properties:
+        imageReference:
+          $ref: '#/components/schemas/ImageReference'
+        osDisk:
+          $ref: '#/components/schemas/OSDisk'
+        dataDisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataDisk'
+          description: Specifies the parameters that are used to add a data disk to a virtual machine.
+    RunCommandInput:
+      type: object
+      description: Capture virtual machine parameters.
+      required:
+      - commandId
+      properties:
+        commandId:
+          type: string
+          description: The run command id.
+        script:
+          type: array
+          items:
+            type: string
+          description: Optional. The script to be executed.
+        parameters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The run command parameter name.
+              value:
+                type: string
+                description: The run command parameter value.
+          description: The run command parameters.
   parameters:
-    SubscriptionIdParameter:
-      name: subscriptionId
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      required: true
+      description: Client API version.
+      schema:
+        type: string
+        default: '2024-07-01'
+    LocationParameter:
+      name: location
       in: path
       required: true
-      description: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+      description: The location for which virtual machines are listed.
       schema:
         type: string
     VmNameParameter:
@@ -1591,6 +1599,13 @@ components:
       description: The name of the virtual machine.
       schema:
         type: string
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      required: true
+      description: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+      schema:
+        type: string
     ResourceGroupNameParameter:
       name: resourceGroupName
       in: path
@@ -1598,21 +1613,6 @@ components:
       description: The name of the resource group.
       schema:
         type: string
-    LocationParameter:
-      name: location
-      in: path
-      required: true
-      description: The location for which virtual machines are listed.
-      schema:
-        type: string
-    ApiVersionParameter:
-      name: api-version
-      in: query
-      required: true
-      description: Client API version.
-      schema:
-        type: string
-        default: '2024-07-01'
   securitySchemes:
     OAuth2Auth:
       type: oauth2
