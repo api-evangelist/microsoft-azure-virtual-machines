@@ -1,4 +1,4 @@
-# Azure Virtual Machines (microsoft-azure-virtual-machines)
+# Azure Virtual Machines
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,271 +66,190 @@
 
 Azure Virtual Machines (VMs) is one of several types of on-demand, scalable computing resources that Azure offers. VMs give you the flexibility of virtualization without having to buy and maintain physical hardware.
 
-**APIs.json:** [https://azure.microsoft.com/en-us/services/virtual-machines/](https://azure.microsoft.com/en-us/services/virtual-machines/)
+**Areas:** Cloud Computing · Compute · Infrastructure-as-a-Service · Infrastructure · Virtual Machines
 
-## Tags
+## Azure Virtual Machines on APIs.io
 
-- Cloud Computing
-- Compute
-- IaaS
-- Infrastructure
-- Virtual Machines
+Everything profiled for Azure Virtual Machines is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/microsoft-azure-virtual-machines/](https://apis.io/providers/microsoft-azure-virtual-machines/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (10)
 
-- **Created:** 2024-01-20
-- **Modified:** 2026-05-19
+- [Azure Virtual Machine Scale Sets REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-virtual-machine-scale-sets-rest-api/) — REST API for creating and managing Azure Virtual Machine Scale Sets (VMSS). Enables deployment and management of groups of identical, load-balanced VMs that…
+- [Azure Virtual Machine Extensions REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-virtual-machine-extensions-rest-api/) — REST API for managing Virtual Machine Extensions, which provide post-deployment configuration and automation tasks on Azure VMs. Extensions can install…
+- [Azure Virtual Machine Images REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-virtual-machine-images-rest-api/) — REST API for listing and querying available virtual machine images in Azure, including platform images, marketplace images, and custom images. Provides…
+- [Azure Virtual Machine Sizes REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-virtual-machine-sizes-rest-api/) — REST API for listing available virtual machine sizes in a given Azure region. Returns the complete catalog of VM sizes with their resource specifications…
+- [Azure Virtual Machine Run Commands REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-virtual-machine-run-commands-rest-api/) — REST API for executing scripts and commands on Azure Virtual Machines without requiring direct network connectivity. Useful for troubleshooting, running…
+- [Azure Availability Sets REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-availability-sets-rest-api/) — REST API for creating and managing Availability Sets, which are logical groupings of VMs that distribute them across fault domains and update domains to…
+- [Azure Proximity Placement Groups REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-proximity-placement-groups-rest-api/) — REST API for creating and managing Proximity Placement Groups, which co-locate Azure resources within the same datacenter to achieve low network latency…
+- [Azure Dedicated Hosts REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-dedicated-hosts-rest-api/) — REST API for creating and managing Azure Dedicated Hosts, which provide physical servers dedicated to a single Azure subscription. Dedicated hosts give…
+- [Azure Capacity Reservations REST API](https://apis.io/apis/microsoft-azure-virtual-machines/azure-capacity-reservations-rest-api/) — REST API for creating and managing Capacity Reservations, which allow you to reserve compute capacity in an Azure region or availability zone. Ensures that…
+- [Azure Virtual Machines Virtual Machines API](https://apis.io/apis/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-virtual-machines-api/) — Operations for creating, updating, deleting, and managing the lifecycle of Azure Virtual Machines including power operations, patching, and diagnostics.
 
-## APIs
+### Published properties
 
-### Azure Virtual Machines REST API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-REST API for creating and managing Azure Virtual Machines. Provides operations for provisioning, starting, stopping, deallocating, restarting, reimaging, capturing, and deleting virtual machines, as well as managing data disks, extensions, patching, and run commands.
+#### Agentic access (1)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/](https://learn.microsoft.com/en-us/azure/virtual-machines/)
-- **Base URL:** `https://management.azure.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Microsoft Azure Virtual Machines Agentic Access](https://apis.io/agentic-access/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-agentic-access/)
 
-- Compute
-- REST API
-- Virtual Machines
+#### JSON Schema (37)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines)
-- [OpenAPI](https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/virtualMachines.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Swagger](https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/virtualMachines.json)
-- [Pricing](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/)
-- [S L A](https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/)
-- [Getting Started](https://learn.microsoft.com/en-us/azure/virtual-machines/overview)
-- [Tutorials](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-manage-vm)
-- [S D Ks](https://azure.microsoft.com/en-us/downloads/)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines?view=rest-compute-2025-04-01)
-- [Authentication](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-managed-identities-work-vm)
-- [Quickstart](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli)
-- [Rate Limits](https://learn.microsoft.com/en-us/azure/virtual-machines/quotas)
-- [S D K -  Python](https://learn.microsoft.com/en-us/python/api/overview/azure/compute)
-- [S D K - . N E T](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute)
-- [S D K -  Java Script](https://www.npmjs.com/package/@azure/arm-compute)
-- [S D K -  Go](https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/arm/compute)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [ApiError](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-apierror/)
+- [ApiErrorBase](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-apierrorbase/)
+- [AttachDetachDataDisksRequest](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-attachdetachdatadisksrequest/)
+- [CloudError](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-clouderror/)
+- [DataDisk](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-datadisk/)
+- [DiagnosticsProfile](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-diagnosticsprofile/)
+- [HardwareProfile](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-hardwareprofile/)
+- [ImageReference](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-imagereference/)
+- [InstanceViewStatus](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-instanceviewstatus/)
+- [LinuxConfiguration](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-linuxconfiguration/)
+- [LinuxPatchSettings](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-linuxpatchsettings/)
+- [ManagedDiskParameters](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-manageddiskparameters/)
+- [NetworkInterfaceReference](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-networkinterfacereference/)
+- [NetworkProfile](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-networkprofile/)
+- [OSDisk](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-osdisk/)
+- [OSProfile](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-osprofile/)
+- [Plan](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-plan/)
+- [RetrieveBootDiagnosticsDataResult](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-retrievebootdiagnosticsdataresult/)
+- [RunCommandInput](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-runcommandinput/)
+- [RunCommandResult](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-runcommandresult/)
+- [StorageProfile](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-storageprofile/)
+- [SubResource](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-subresource/)
+- [VirtualMachine](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-virtualmachine/)
+- [VirtualMachineAssessPatchesResult](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-virtualmachineassesspatchesresult/)
+- [VirtualMachineCaptureParameters](https://apis.io/schemas/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-virtualmachinecaptureparameters/)
+- …and 12 more published on APIs.io
 
-### Azure Virtual Machine Scale Sets REST API
+#### JSON Structure (1)
 
-REST API for creating and managing Azure Virtual Machine Scale Sets (VMSS). Enables deployment and management of groups of identical, load-balanced VMs that can automatically scale in response to demand or a defined schedule.
+Data models expressed in JSON Structure.
 
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/)
-- **Base URL:** `https://management.azure.com`
+- [Microsoft Azure Virtual Machines Structure](https://apis.io/json-structure/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-structure/)
 
-#### Tags
+#### Vocabulary (1)
 
-- Autoscaling
-- Load Balancing
-- Virtual Machine Scale Sets
+The provider's domain terms, defined.
 
-#### Properties
+- [Azure Virtual Machines Domain Vocabulary](https://apis.io/vocabularies/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-vocabulary/)
 
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-scale-sets)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-scale-sets?view=rest-compute-2025-04-01)
-- [Getting Started](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/quick-create-portal)
-- [Pricing](https://azure.microsoft.com/en-us/pricing/details/virtual-machine-scale-sets/)
-- [F A Q](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-faq)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (3)
 
-### Azure Virtual Machine Extensions REST API
+Postman and Open Collection request collections.
 
-REST API for managing Virtual Machine Extensions, which provide post-deployment configuration and automation tasks on Azure VMs. Extensions can install software, run scripts, configure diagnostics, and integrate with monitoring and security tools.
+- [Azure Virtual Machines REST API](https://apis.io/collections/microsoft-azure-virtual-machines/open-azure-virtual-machines/)
+- [Azure REST Virtual Machines API](https://apis.io/collections/microsoft-azure-virtual-machines/open-microsoft-azure-virtual-machines-virtual-machines-api/)
+- [Azure REST Virtual Machines API](https://apis.io/collections/microsoft-azure-virtual-machines/postman-microsoft-azure-virtual-machines-virtual-machines-api/)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview)
-- **Base URL:** `https://management.azure.com`
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Automation
-- Configuration
-- Extensions
+- [Azure Virtual Machines — jsonschema rules](https://apis.io/rules/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-jsonschema-spectral-rules/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-extensions)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-extensions?view=rest-compute-2025-04-01)
-- [Getting Started](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Azure Virtual Machine Images REST API
+- [Microsoft Azure Virtual Machines Authentication](https://apis.io/security/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-authentication/)
+- [Microsoft Azure Virtual Machines Domain Security](https://apis.io/security/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-domain-security/)
 
-REST API for listing and querying available virtual machine images in Azure, including platform images, marketplace images, and custom images. Provides operations for listing publishers, offers, SKUs, and image versions by region.
+#### OAuth scopes (1)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage)
-- **Base URL:** `https://management.azure.com`
+The permissions the API asks for.
 
-#### Tags
+- [Microsoft Azure Virtual Machines Scopes](https://apis.io/scopes/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-scopes/)
 
-- Images
-- Marketplace
-- VM Images
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-images)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-images?view=rest-compute-2025-04-01)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Microsoft Azure Virtual Machines Plans Pricing](https://apis.io/plans/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-plans-pricing/)
 
-### Azure Virtual Machine Sizes REST API
+#### Rate limits (1)
 
-REST API for listing available virtual machine sizes in a given Azure region. Returns the complete catalog of VM sizes with their resource specifications including number of vCPUs, memory, and disk capacity.
+Published request limits.
 
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview)
-- **Base URL:** `https://management.azure.com`
+- [Microsoft Azure Virtual Machines Rate Limits](https://apis.io/rate-limits/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-rate-limits/)
 
-#### Tags
+#### FinOps (1)
 
-- Capacity
-- SKUs
-- VM Sizes
+What the API costs to run, by operation.
 
-#### Properties
+- [Microsoft Azure Virtual Machines Finops](https://apis.io/finops/microsoft-azure-virtual-machines/microsoft-azure-virtual-machines-finops/)
 
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-sizes)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-sizes/list?view=rest-compute-2025-04-01)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+## Where to find this API
 
-### Azure Virtual Machine Run Commands REST API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-REST API for executing scripts and commands on Azure Virtual Machines without requiring direct network connectivity. Useful for troubleshooting, running diagnostics, and performing administrative tasks remotely via the Azure management plane.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview](https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)
-- **Base URL:** `https://management.azure.com`
-
-#### Tags
-
-- Diagnostics
-- Run Commands
-- Scripting
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-run-commands)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machine-run-commands/list-by-virtual-machine?view=rest-compute-2025-04-01)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure Availability Sets REST API
-
-REST API for creating and managing Availability Sets, which are logical groupings of VMs that distribute them across fault domains and update domains to provide high availability and resilience during planned and unplanned maintenance events.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/availability-set-overview](https://learn.microsoft.com/en-us/azure/virtual-machines/availability-set-overview)
-- **Base URL:** `https://management.azure.com`
-
-#### Tags
-
-- Availability Sets
-- Fault Domains
-- High Availability
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/availability-sets)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/availability-sets?view=rest-compute-2024-07-01)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure Proximity Placement Groups REST API
-
-REST API for creating and managing Proximity Placement Groups, which co-locate Azure resources within the same datacenter to achieve low network latency between virtual machines, scale sets, and other compute resources.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/co-location](https://learn.microsoft.com/en-us/azure/virtual-machines/co-location)
-- **Base URL:** `https://management.azure.com`
-
-#### Tags
-
-- Co-Location
-- Low Latency
-- Proximity Placement Groups
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/proximity-placement-groups)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/proximity-placement-groups/list-by-subscription?view=rest-compute-2025-02-01)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure Dedicated Hosts REST API
-
-REST API for creating and managing Azure Dedicated Hosts, which provide physical servers dedicated to a single Azure subscription. Dedicated hosts give visibility and control over server-level infrastructure to help address compliance and regulatory requirements.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/dedicated-hosts](https://learn.microsoft.com/en-us/azure/virtual-machines/dedicated-hosts)
-- **Base URL:** `https://management.azure.com`
-
-#### Tags
-
-- Compliance
-- Dedicated Hosts
-- Isolation
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/compute/dedicated-host-groups)
-- [Reference](https://learn.microsoft.com/en-us/rest/api/compute/dedicated-host-groups/list-by-resource-group?view=rest-compute-2024-11-04)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure Capacity Reservations REST API
-
-REST API for creating and managing Capacity Reservations, which allow you to reserve compute capacity in an Azure region or availability zone. Ensures that allocated capacity is available when you need to deploy virtual machines without relying on spot or on-demand availability.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
-- **Base URL:** `https://management.azure.com`
-
-#### Tags
-
-- Capacity Reservations
-- Planning
-- Reserved Capacity
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
-- [Reference](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-group-share)
-- [Postman Collection](collections/azure-virtual-machines.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-virtual-machines.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Portal](https://portal.azure.com)
-- [Authentication](https://learn.microsoft.com/en-us/azure/active-directory/develop/authentication-scenarios)
-- [Status Page](https://status.azure.com/)
-- [Blog](https://azure.microsoft.com/en-us/blog/)
-- [Support](https://azure.microsoft.com/en-us/support/options/)
-- [Terms of Service](https://azure.microsoft.com/en-us/support/legal/)
-- [Privacy Policy](https://privacy.microsoft.com/en-us/privacystatement)
-- [Contact](https://azure.microsoft.com/en-us/contact/)
-- [Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/)
-- [Getting Started](https://learn.microsoft.com/en-us/azure/virtual-machines/overview)
-- [Pricing](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/)
 - [Website](https://azure.microsoft.com/en-us/products/virtual-machines)
-- [Sign Up](https://azure.microsoft.com/en-us/free)
-- [Login](https://portal.azure.com)
-- [S D Ks](https://azure.microsoft.com/en-us/downloads/)
-- [C L I  Tools](https://learn.microsoft.com/en-us/cli/azure/vm)
-- [Rate Limits](https://learn.microsoft.com/en-us/azure/virtual-machines/quotas)
+- [Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/)
+- [Getting started](https://learn.microsoft.com/en-us/azure/virtual-machines/overview)
+- [Pricing](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/)
+- [Support](https://azure.microsoft.com/en-us/support/options/)
 - [Changelog](https://azure.microsoft.com/en-us/updates/?product=virtual-machines)
-- [Community](https://learn.microsoft.com/en-us/answers/tags/94/azure-virtual-machines)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-virtual-machines)
-- [GitHub Organization](https://github.com/Azure)
-- [Git Hub  R E S T  A P I  Specs](https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager)
-- [Training](https://learn.microsoft.com/en-us/training/modules/intro-to-azure-virtual-machines/)
-- [F A Q](https://learn.microsoft.com/en-us/azure/virtual-machines/faq-for-disks)
-- [YouTube](https://www.youtube.com/c/MicrosoftAzure)
-- [S L A](https://azure.microsoft.com/en-us/support/legal/sla/virtual-machines/)
+- [Blog](https://azure.microsoft.com/en-us/blog/)
+- [Terms of service](https://azure.microsoft.com/en-us/support/legal/)
+- [Privacy policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [GitHub](https://github.com/Azure)
+- [Status](https://status.azure.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 49.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 30.0 |
+| Contract governance | 9.8 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 68.6 |
+| Access clarity | 52.6 |
+
+**Agent readiness 19.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/microsoft-azure-virtual-machines/](https://apis.io/providers/microsoft-azure-virtual-machines/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Azure Virtual Machines: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/microsoft-azure-virtual-machines/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
